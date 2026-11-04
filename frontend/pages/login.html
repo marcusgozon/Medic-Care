@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" data-guest-only>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title data-i18n="log.doctitle">Login | MEDIC CARE</title>
+  <link rel="icon" type="image/png" href="../assets/medic-care-favicon.png">
+  <script src="../script/auth.js"></script>
+  <script src="../script/languages.js"></script>
+
+  <link rel="stylesheet" href="../styles/medic-care.css">
+</head>
+
+<body data-page="login">
+  <div class="page">
+
+    <div class="left">
+      <form class="form" id="loginForm" novalidate>
+        <img class="page-brand-logo" src="../assets/medic-care-logo.png" alt="Medic Care">
+        <h1 data-i18n="log.h1">Login</h1>
+        <p class="sub" data-i18n="log.sub">Log in to your account.</p>
+
+        <label for="email" data-i18n="log.id">Email</label>
+        <div class="field">
+          <input id="email" type="email" placeholder="Enter your email address" data-i18n-ph="log.id.ph"
+            autocomplete="username">
+        </div>
+        <div class="msg" id="emailMsg"></div>
+
+        <label for="pw" data-i18n="log.pw">Password</label>
+        <div class="field">
+          <input id="pw" type="password" placeholder="Enter your password" data-i18n-ph="log.pw.ph"
+            autocomplete="current-password" class="extracted-inline-style-1">
+          <button type="button" class="eye" id="eye" aria-label="Show password">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
+              <circle id="pupil" cx="12" cy="12" r="3" fill="#444" />
+            </svg>
+          </button>
+        </div>
+        <div class="msg" id="pwMsg"></div>
+
+        <a class="forgot" href="#" id="forgotLink" data-i18n="log.forgot">Forgot Password?</a>
+
+        <button class="btn" type="submit" data-i18n="log.btn">Sign In</button>
+
+        <div class="signup">
+          <span data-i18n="log.nosign">Don't have an account?</span>
+          <a href="signup.html" id="signup" data-i18n="log.signup">Sign up</a>
+        </div>
+      </form>
+    </div>
+
+    <div class="right"></div>
+
+    <!-- Forgot Password Modal -->
+    <div class="overlay" id="forgotModal">
+      <form class="card" id="forgotForm" novalidate>
+        <h2 data-i18n="log.f.title">Forgot your password?</h2>
+        <p data-i18n="log.f.desc">Enter your email so that we can send you a password reset link.</p>
+
+        <div class="field">
+          <label for="fEmail" data-i18n="log.f.label">Email</label>
+          <input id="fEmail" type="email" placeholder="e.g., name@email.com" data-i18n-ph="log.f.ph">
+          <div  class="msg extracted-inline-style-2" id="fMsg"></div>
+        </div>
+
+        <button class="wide" type="submit" data-i18n="log.f.send">Send Email</button>
+        <button type="button"  class="linkbtn back extracted-inline-style-3" id="backLogin" data-i18n="log.f.back">&lt; Back to
+          Login</button>
+      </form>
+    </div>
+
+    <!-- Confirm login by e-mail -->
+    <div class="overlay" id="verifyModal">
+      <div class="card">
+        <svg class="mail" width="42" height="36" viewBox="0 0 42 36" fill="none">
+          <rect x="2" y="8" width="32" height="24" rx="3" fill="#fff" stroke="#111" stroke-width="3" />
+          <path d="M3 11l15 11 15-11" stroke="#111" stroke-width="3" fill="none" />
+          <circle cx="33" cy="9" r="8" fill="#111" />
+          <path d="M29 9l3 3 5-6" stroke="#fff" stroke-width="2" fill="none" />
+        </svg>
+        <h2 data-i18n="log.v.title">Confirm it's you</h2>
+        <p id="vDesc"></p>
+        <button class="resend" id="vResend" type="button"><span id="vResendTxt" data-i18n="log.c.resend">Resend email</span></button>
+        <button type="button"  class="linkbtn back extracted-inline-style-4" id="vCancel" data-i18n="log.v.cancel">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Check Email Modal -->
+    <div class="overlay" id="checkModal">
+      <div class="card">
+        <svg class="mail" width="42" height="36" viewBox="0 0 42 36" fill="none">
+          <rect x="2" y="8" width="32" height="24" rx="3" fill="#fff" stroke="#111" stroke-width="3" />
+          <path d="M3 11l15 11 15-11" stroke="#111" stroke-width="3" fill="none" />
+          <circle cx="33" cy="9" r="8" fill="#111" />
+          <path d="M29 9l3 3 5-6" stroke="#fff" stroke-width="2" fill="none" />
+        </svg>
+
+        <h2 data-i18n="log.c.title">Check your email!</h2>
+        <p id="checkDesc"></p>
+
+        <button class="wide" id="openInbox" type="button" data-i18n="log.c.inbox">Open email inbox</button>
+
+        <button class="resend" id="resend" type="button">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.5">
+            <path d="M21 12a9 9 0 1 1-3-6.7" />
+            <path d="M21 3v6h-6" />
+          </svg>
+          <span id="resendTxt" data-i18n="log.c.resend">Resend email</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    /* Login page. Needs auth.js and languages.js loaded first. */
+
+    const byId = (id) => document.getElementById(id);
+
+    /* ===== Settings ===== */
+    const RESEND_SECONDS = 30;
+
+    // "reason" values from Auth.verify() that mean the account does not exist.
+    // Adjust to match what backend/app.py returns from /verify.
+    const NOT_FOUND_REASONS = ["not_found", "none", "no_account", "no_user"];
+
+    /* ===== Text that has no entry in languages.js yet ===== */
+   const LOCAL = {
+      "err.server": {
+        en: "The live server is currently updating or experiencing an issue. Please try again in a few moments.",
+        fil: "Ang live server ay kasalukuyang nag-uupdate o may kinakaharap na problema. Mag-antay at subukan muli."
+      },
+      "err.network": {
+        en: "Can't reach the server. Check your connection and try again.",
+        fil: "Hindi makakonekta sa server. Suriin ang iyong koneksyon at subukan muli."
+      },
+      "err.tooMany": {
+        en: "Too many attempts. Please wait a moment and try again.",
+        fil: "Masyadong maraming pagsubok. Maghintay muna at subukan muli."
+      }
+    };
+
+    function t(key, vars) {
+      if (LOCAL[key]) return LOCAL[key][I18N.getLang()] || LOCAL[key].en;
+      return I18N.t(key, vars);
+    }
+
+    let toastTimer = null;
+    let resendTimer = null;
+    let resendLeft = 0;
+    let sentEmail = "";
+
+    /* ===== Toast ===== */
+    function toast(msg) {
+      const el = byId("toast");
+      el.textContent = msg;
+      el.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove("show"), 2800);
+    }
+
+    /* ===== Modals ===== */
+    function showModal(id) {
+      ["forgotModal", "checkModal", "verifyModal"].forEach((m) => {
+        byId(m).classList.toggle("show", m === id);
+      });
+    }
+
+    const hideModals = () => { stopVerify(); showModal(null); };
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") hideModals();
+    });
+
+    /* ===== Show / hide password ===== */
+    function paintEye() {
+      const visible = byId("pw").type === "text";
+      byId("pupil").setAttribute("fill", visible ? "none" : "#444");
+      byId("eye").setAttribute("aria-label", t(visible ? "log.eye.hide" : "log.eye.show"));
+    }
+
+    byId("eye").addEventListener("click", () => {
+      byId("pw").type = byId("pw").type === "text" ? "password" : "text";
+      paintEye();
+    });
+
+    /* ===== Error helpers (errors are stored as translation keys) ===== */
+    const errs = {}; // msgId -> translation key
+
+    function setError(inputId, msgId, key) {
+      errs[msgId] = key || null;
+      byId(msgId).textContent = key ? t(key) : "";
+      byId(inputId).classList.toggle("err", !!key);
+    }
+
+    function repaintErrors() {
+      Object.keys(errs).forEach((msgId) => {
+        if (errs[msgId]) byId(msgId).textContent = t(errs[msgId]);
+      });
+    }
+
+    function clearErrors() {
+      setError("email", "emailMsg", "");
+      setError("pw", "pwMsg", "");
+    }
+
+    // Typing in a field clears only that field's error
+    byId("email").addEventListener("input", () => setError("email", "emailMsg", ""));
+    byId("pw").addEventListener("input", () => setError("pw", "pwMsg", ""));
+    byId("fEmail").addEventListener("input", () => setError("fEmail", "fMsg", ""));
+
+    /* ===== Login ===== */
+    byId("loginForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      clearErrors();
+
+      const raw = byId("email").value.trim();
+      const pw = byId("pw").value;
+
+      const emailErr = Auth.validId(raw) ? "" : "log.err.id";
+      const pwErr = pw ? "" : "log.err.pw";
+
+      setError("email", "emailMsg", emailErr);
+      setError("pw", "pwMsg", pwErr);
+
+      if (emailErr || pwErr) {
+        byId(emailErr ? "email" : "pw").focus();
+        return;
+      }
+
+      const id = Auth.normalize(raw);
+
+      if (location.protocol === "file:") {
+        setError("pw", "pwMsg", "err.server");
+        byId("pw").focus();
+        return;
+      }
+
+      // Step 1: check the password
+      const check = Auth.verify(id, pw);
+
+      if (!check.ok) {
+        if (check.reason === "server_required") {
+          setError("pw", "pwMsg", "err.server");
+          byId("pw").focus();
+        } else if (check.reason === "network") {
+          setError("pw", "pwMsg", "err.network");
+          byId("pw").focus();
+        } else if (NOT_FOUND_REASONS.includes(check.reason)) {
+          setError("email", "emailMsg", "log.err.none");
+          byId("email").focus();
+        } else if (check.reason === "email_unavailable") {
+          setError("pw", "pwMsg", "err.emailfail");
+          byId("pw").focus();
+        } else if (check.reason === "too_many") {
+          setError("pw", "pwMsg", "err.tooMany");
+          byId("pw").focus();
+        } else if (check.reason === "auth_unavailable" || check.reason === "database_unavailable") {
+          setError("pw", "pwMsg", "err.server");
+          byId("pw").focus();
+        } else if (check.reason === "bad") {
+          setError("pw", "pwMsg", "log.err.bad");
+          byId("pw").focus();
+        } else {
+          setError("pw", "pwMsg", "err.fail");
+          byId("pw").focus();
+        }
+        return;
+      }
+
+      // Step 1b: the server e-mailed a link. Wait until it is opened, then continue to step 2.
+      if (check.needsEmail) {
+        startVerify(check.id || id, check.email);
+        return;
+      }
+
+      // Step 2: start the session
+      const login = Auth.login(check.id || id);
+
+      if (!login.ok) {
+        if (NOT_FOUND_REASONS.includes(login.reason)) {
+          setError("email", "emailMsg", "log.err.none");
+          byId("email").focus();
+        } else if (login.reason === "server_required") {
+          setError("pw", "pwMsg", "err.server");
+          byId("pw").focus();
+        } else if (login.reason === "network") {
+          setError("pw", "pwMsg", "err.network");
+          byId("pw").focus();
+        } else {
+          setError("pw", "pwMsg", "err.fail");
+          byId("pw").focus();
+        }
+        return;
+      }
+
+      location.href = Auth.HOME;
+    });
+
+    /* ===== Confirm login by e-mail link ===== */
+    let verifyTimer = null, verifyId = "", verifyMail = "", vLeft = 0, vCooldown = null;
+
+    function stopVerify() {
+      clearInterval(verifyTimer); verifyTimer = null;
+      clearInterval(vCooldown); vCooldown = null;
+    }
+
+    function paintVerify() {
+      byId("vDesc").textContent = t("log.v.desc", { email: verifyMail });
+      byId("vResendTxt").textContent = vLeft > 0 ? t("log.c.wait", { n: vLeft }) : t("log.c.resend");
+    }
+
+    function startVerify(id, maskedEmail) {
+      verifyId = id; verifyMail = maskedEmail;
+      vLeft = RESEND_SECONDS; byId("vResend").disabled = true;
+      paintVerify();
+      showModal("verifyModal");
+
+      clearInterval(vCooldown);
+      vCooldown = setInterval(() => {
+        vLeft = Math.max(0, vLeft - 1);
+        if (vLeft === 0) { clearInterval(vCooldown); byId("vResend").disabled = false; }
+        paintVerify();
+      }, 1000);
+
+      clearInterval(verifyTimer);
+      verifyTimer = setInterval(() => {
+        Auth.loginStatus((s) => {
+          if (!verifyTimer) return;
+          if (s.expired) { stopVerify(); hideModals(); toast(t("log.v.expired")); return; }
+          if (!s.confirmed) return;
+          stopVerify();
+          const r = Auth.login(verifyId);                 // the link was opened: start the session
+          if (r.ok) { location.href = Auth.HOME; return; }
+          hideModals();
+          toast(t("err.fail"));
+        });
+      }, 3000);
+    }
+
+    byId("vResend").addEventListener("click", () => {
+      if (byId("vResend").disabled) return;
+      const r = Auth.resendLoginEmail();
+      if (r.ok) { toast(t("log.t.resent")); startVerify(verifyId, verifyMail); }
+      else toast(t(r.reason === "too_many" ? "err.tooMany" : "err.emailfail"));
+    });
+    byId("vCancel").addEventListener("click", hideModals);
+    window.addEventListener("langchange", () => { if (verifyTimer) paintVerify(); });
+
+    /* ===== Forgot password ===== */
+    byId("forgotLink").addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // Pre-fill with what the user already typed, if it is an email
+      const typed = Auth.normalize(byId("email").value);
+      byId("fEmail").value = Auth.isEmail(typed) ? typed : "";
+
+      setError("fEmail", "fMsg", "");
+      showModal("forgotModal");
+      byId("fEmail").focus({ preventScroll: true });
+    });
+
+    byId("backLogin").addEventListener("click", hideModals);
+
+    function paintResend() {
+      byId("resendTxt").textContent = resendLeft > 0
+        ? t("log.c.wait", { n: resendLeft })
+        : t("log.c.resend");
+    }
+
+    function paintCheckDesc() {
+      if (sentEmail) byId("checkDesc").textContent = t("log.c.desc", { email: sentEmail });
+    }
+
+    function startCooldown() {
+      resendLeft = RESEND_SECONDS;
+      byId("resend").disabled = true;
+      paintResend();
+
+      clearInterval(resendTimer);
+      resendTimer = setInterval(() => {
+        resendLeft -= 1;
+        if (resendLeft <= 0) {
+          resendLeft = 0;
+          clearInterval(resendTimer);
+          byId("resend").disabled = false;
+        }
+        paintResend();
+      }, 1000);
+    }
+
+    byId("forgotForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const email = Auth.normalize(byId("fEmail").value);
+
+      if (!Auth.isEmail(email)) {
+        setError("fEmail", "fMsg", "log.f.err");
+        byId("fEmail").focus();
+        return;
+      }
+
+      const r = Auth.requestReset(email);
+      if (!r.ok) {
+        setError("fEmail", "fMsg",
+          r.reason === "too_many" ? "err.toomany" : r.reason === "network" ? "err.network" : "err.reset");
+        return;
+      }
+      sentEmail = email;
+      paintCheckDesc();
+      showModal("checkModal");
+      startCooldown();
+    });
+
+    byId("resend").addEventListener("click", () => {
+      if (byId("resend").disabled) return;
+      const r = Auth.requestReset(sentEmail);
+      if (r.ok) {
+        toast(t("log.t.resent"));
+        startCooldown();
+      } else {
+        toast(t(r.reason === "too_many" ? "err.toomany" : "err.reset"));
+      }
+    });
+
+    byId("openInbox").addEventListener("click", () => {
+      location.href = "mailto:" + sentEmail;
+    });
+
+    /* ===== Re-render dynamic text when the language changes ===== */
+    window.addEventListener("langchange", () => {
+      repaintErrors();
+      paintEye();
+      paintResend();
+      paintCheckDesc();
+    });
+
+    paintEye();
+
+    /* ===== Message after signing up ===== */
+    if (new URLSearchParams(location.search).get("created") === "1") {
+      toast(t("log.t.created"));
+    }
+  </script>
+</body>
+
+</html>

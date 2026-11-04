@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en" data-requires-login>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title data-i18n="prof.doctitle">Profile | MEDIC CARE</title>
+  <link rel="icon" type="image/png" href="../assets/medic-care-favicon.png">
+  <script src="../script/auth.js"></script>
+  <script src="../script/languages.js"></script>
+  <link rel="stylesheet" href="../styles/medic-care.css">
+</head>
+<body data-page="profile">
+
+  <!-- Sidebar -->
+  <div class="scrim" id="scrim"></div>
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation" aria-hidden="true">
+    <div class="side-profile">
+      <div class="side-avatar" id="sideAvatar">FP</div>
+      <div class="side-info">
+        <strong id="sideName">Final Project</strong>
+        <span id="sideEmail">finalproject@gmail.com</span>
+      </div>
+      <button class="icon-btn light" id="closeSidebar" aria-label="Close menu" data-i18n-aria="menu.close">&times;</button>
+    </div>
+    <hr>
+    <label class="side-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" aria-hidden="true"><circle cx="10.500" cy="10.500" r="6.500"/><path d="m20 20-4.800-4.800"/></svg>
+      <input type="search" id="navSearch" placeholder="Search..." data-i18n-ph="nav.search" aria-label="Search menu" autocomplete="off">
+    </label>
+    <nav id="nav">
+      <a href="../index.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 11.500 12 3l9 8.500V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span data-i18n="nav.dashboard">Dashboard</span></a>
+      <a href="profile.html" class="active" aria-current="page"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7.500" r="4.500"/><path d="M3.500 21c0-4.500 3.800-7 8.500-7s8.500 2.500 8.500 7z"/></svg><span data-i18n="nav.profile">Profile</span></a>
+      <a href="appointment.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zM5 9h14v11H5z"/><path d="M7 11h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2zM7 15h2v2H7zm4 0h2v2h-2z"/></svg><span data-i18n="nav.appointment">Appointment</span></a>
+      <a href="medical_history.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm2 16H8v-2h8zm0-4H8v-2h8zm-3-5V3.500L18.500 9z"/></svg><span data-i18n="nav.history">Medical History</span></a>
+      <a href="settings.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.140 12.940c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.030-1.580a.49.49 0 0 0 .12-.61l-1.920-3.320a.488.488 0 0 0-.59-.22l-2.390.96c-.5-.38-1.030-.7-1.620-.94l-.36-2.540a.484.484 0 0 0-.48-.41h-3.840c-.24 0-.43.17-.47.41l-.36 2.540c-.59.24-1.130.57-1.620.94l-2.390-.96c-.22-.08-.47 0-.59.22L2.740 8.870c-.12.21-.08.47.12.61l2.030 1.580c-.05.3-.09.63-.09.94s.02.64.07.94l-2.030 1.580a.49.49 0 0 0-.12.61l1.920 3.320c.12.22.37.29.59.22l2.390-.96c.5.38 1.030.7 1.620.94l.36 2.540c.05.24.24.41.48.41h3.840c.24 0 .44-.17.47-.41l.36-2.540c.59-.24 1.130-.56 1.620-.94l2.390.96c.22.08.47 0 .59-.22l1.920-3.320c.12-.22.07-.47-.12-.61zM12 15.600c-1.980 0-3.600-1.620-3.600-3.600s1.620-3.600 3.600-3.600 3.600 1.620 3.600 3.600-1.620 3.600-3.600 3.600z"/></svg><span data-i18n="nav.settings">Settings</span></a>
+      <p class="no-match" id="noMatch" hidden data-i18n="nav.nomatch">No matching pages</p>
+    </nav>
+    <a href="login.html" class="logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h5a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-5M8 8l-4 4 4 4M4 12h11"/></svg><span data-i18n="nav.logout">Logout</span></a>
+  </aside>
+
+  <div class="app-container">
+    <header class="topbar">
+      <button class="icon-btn" id="menuBtn" type="button" aria-label="Open menu" data-i18n-aria="menu.open" aria-expanded="false" aria-controls="sidebar">
+        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M2 5h18M2 11h18M2 17h18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+      </button>
+      <div class="brand">
+        <span class="brand-name">MEDIC CARE</span>
+        <img class="brand-logo" src="../assets/medic-care-logo.png" alt="Medic Care">
+      </div>
+    </header>
+
+    <main class="user-details-card">
+      <!-- Form view -->
+      <div id="formView">
+        <div class="card-top-bar">
+          <h1 class="card-title" data-i18n="prof.h1">Profile</h1>
+          <div class="profile-avatar" id="avatarInitials" aria-hidden="true">--</div>
+        </div>
+
+        <form id="userDetailsForm" novalidate>
+          <div class="input-group">
+            <label for="fullName" data-i18n="prof.name">Full Name</label>
+            <div class="input-wrapper">
+              <input type="text" id="fullName" maxlength="200" autocomplete="name" placeholder="Full name" data-i18n-ph="prof.ph.name">
+            </div>
+            <div class="msg" id="nameMsg"></div>
+          </div>
+
+          <div class="input-group">
+            <label for="email" data-i18n="prof.email">Email Address</label>
+            <div class="input-wrapper">
+              <input type="email" id="email" autocomplete="email" placeholder="name@email.com" data-i18n-ph="prof.ph.email">
+            </div>
+            <div class="msg" id="emailMsg"></div>
+          </div>
+
+          <div class="input-group">
+            <label for="phone" data-i18n="prof.phone">Phone Number</label>
+            <div class="input-wrapper phone-wrapper">
+              <div class="country-code" role="group" aria-label="Country code" data-i18n-aria="prof.code">
+                <span class="flag" aria-hidden="true">🇵🇭</span>
+                <span>+63</span>
+              </div>
+              <input type="tel" id="phone" inputmode="tel" autocomplete="tel-national" placeholder="9123456789">
+            </div>
+            <div class="msg" id="phoneMsg"></div>
+          </div>
+
+          <div class="input-group">
+            <label for="altPhone" data-l="label.alt">Alternative Number</label>
+            <div class="input-wrapper phone-wrapper">
+              <div class="country-code" role="group" aria-label="Country code" data-i18n-aria="prof.code">
+                <span class="flag" aria-hidden="true">🇵🇭</span>
+                <span>+63</span>
+              </div>
+              <input type="tel" id="altPhone" inputmode="tel" placeholder="9123456789">
+            </div>
+            <div class="msg" id="altPhoneMsg"></div>
+          </div>
+
+          <div class="input-group">
+            <label for="address" data-l="label.address">Address</label>
+            <div class="input-wrapper">
+              <input type="text" id="address" autocomplete="street-address" placeholder="Enter complete address" data-l-ph="ph.address">
+            </div>
+          </div>
+
+          <div class="bottom-fields-grid">
+            <div class="input-group">
+              <label for="gender" data-l="label.gender">Gender</label>
+              <div class="input-wrapper select-wrapper">
+                <select id="gender">
+                  <option value="" disabled selected></option>
+                  <option value="Male" data-l="opt.male">Male</option>
+                  <option value="Female" data-l="opt.female">Female</option>
+                   <option value="Prefer Not To Say" data-l="opt.prefer">Prefer not to say</option>
+                </select>
+                <span class="arrow-down select-arrow" aria-hidden="true">&#9660;</span>
+              </div>
+            </div>
+
+            <div class="input-group">
+              <span class="group-label" id="bdayLabel" data-l="label.bday">Birth Date</span>
+              <div class="bday-select-grid" role="group" aria-labelledby="bdayLabel">
+                <div class="input-wrapper select-wrapper">
+                  <select id="bdayMonth" data-l-aria="opt.month" aria-label="MONTH">
+                    <option value="" disabled selected data-l="opt.month">MONTH</option>
+                  </select>
+                  <span class="arrow-down select-arrow" aria-hidden="true">&#9660;</span>
+                </div>
+
+                <div class="input-wrapper select-wrapper">
+                  <select id="bdayDay" data-l-aria="opt.day" aria-label="DAY">
+                    <option value="" disabled selected data-l="opt.day">DAY</option>
+                  </select>
+                  <span class="arrow-down select-arrow" aria-hidden="true">&#9660;</span>
+                </div>
+
+                <div class="input-wrapper select-wrapper">
+                  <select id="bdayYear" data-l-aria="opt.year" aria-label="YEAR">
+                    <option value="" disabled selected data-l="opt.year">YEAR</option>
+                  </select>
+                  <span class="arrow-down select-arrow" aria-hidden="true">&#9660;</span>
+                </div>
+              </div>
+              <div class="msg" id="bdayMsg"></div>
+            </div>
+          </div>
+
+          <div class="msg form-msg" id="saveMsg" role="alert"></div>
+
+          <div class="btn-container">
+            <button type="submit" class="save-btn" data-i18n="prof.save">Save Changes</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Success view (hidden until the profile is saved) -->
+      <div id="successView"  class="success-container extracted-inline-style-1" role="status">
+        <div class="success-icon-box" aria-hidden="true">✓</div>
+        <h2 class="success-title" data-i18n="prof.saved">Changes saved</h2>
+        <p class="success-desc" data-l="done.desc">Your profile details have been successfully updated and saved.</p>
+        <div  class="btn-container extracted-inline-style-2">
+          <button type="button" class="save-btn" id="backToEditBtn" data-l="done.back">Back to Profile</button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+/* Profile page. Needs auth.js and languages.js loaded first.
+   The account (name, email, phone) is saved with Auth.saveProfile();
+   the other details are saved with Auth.setData("profileExtra"). */
+
+const byId = (id) => document.getElementById(id);
+
+/* ===== Text that has no entry in languages.js yet ===== */
+const LOCAL = {
+  "label.alt":     { en: "Alternative Number", fil: "Alternatibong Numero" },
+  "label.address": { en: "Address", fil: "Tirahan" },
+  "label.gender":     { en: "Gender", fil: "Kasarian" },
+  "label.bday":    { en: "Birth Date", fil: "Petsa ng Kapanganakan" },
+  "opt.male":      { en: "Male", fil: "Lalaki" },
+  "opt.female":    { en: "Female", fil: "Babae" },
+  "opt.prefer":    { en: "Prefer not to say", fil: "Mas pipiliing huwag sabihin" },
+  "opt.month":     { en: "MONTH", fil: "BUWAN" },
+  "opt.day":       { en: "DAY", fil: "ARAW" },
+  "opt.year":      { en: "YEAR", fil: "TAON" },
+  "ph.address":    { en: "Enter complete address", fil: "Ilagay ang kumpletong address" },
+  "done.desc": {
+    en: "Your profile details have been successfully updated and saved.",
+    fil: "Matagumpay na na-update at na-save ang mga detalye ng iyong profile."
+  },
+  "done.back":     { en: "Back to Profile", fil: "Bumalik sa Profile" },
+  "err.bday.incomplete": { en: "Choose the month, day and year.", fil: "Piliin ang buwan, araw at taon." },
+  "err.bday.invalid":    { en: "That date doesn't exist.", fil: "Walang ganoong petsa." },
+  "err.bday.future":     { en: "Birth date can't be in the future.", fil: "Hindi puwedeng nasa hinaharap ang petsa ng kapanganakan." },
+  "err.save": {
+    en: "We couldn't save your changes. Please try again.",
+    fil: "Hindi na-save ang iyong mga pagbabago. Subukan muli."
+  }
+};
+
+const MONTHS = {
+  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  fil: ["Enero", "Pebrero", "Marso", "Abril", "Mayo", "Hunyo", "Hulyo", "Agosto", "Setyembre", "Oktubre", "Nobyembre", "Disyembre"]
+};
+
+function tr(key, vars) {
+  if (LOCAL[key]) return LOCAL[key][I18N.getLang()] || LOCAL[key].en;
+  return I18N.t(key, vars);
+}
+
+function paintLocal() {
+  document.querySelectorAll("[data-l]").forEach((el) => { el.textContent = tr(el.dataset.l); });
+  document.querySelectorAll("[data-l-ph]").forEach((el) => { el.placeholder = tr(el.dataset.lPh); });
+  document.querySelectorAll("[data-l-aria]").forEach((el) => { el.setAttribute("aria-label", tr(el.dataset.lAria)); });
+}
+
+/* ===== Birth date dropdowns ===== */
+function fillMonths() {
+  const sel = byId("bdayMonth");
+  const keep = sel.value;
+  const names = MONTHS[I18N.getLang()] || MONTHS.en;
+
+  while (sel.options.length > 1) sel.remove(1);
+
+  names.forEach((name, i) => {
+    const opt = document.createElement("option");
+    opt.value = String(i + 1);
+    opt.textContent = name;
+    sel.appendChild(opt);
+  });
+
+  sel.value = keep;
+}
+
+function fillDaysAndYears() {
+  const day = byId("bdayDay");
+  const year = byId("bdayYear");
+
+  for (let d = 1; d <= 31; d++) {
+    const opt = document.createElement("option");
+    opt.value = String(d);
+    opt.textContent = String(d);
+    day.appendChild(opt);
+  }
+
+  const thisYear = new Date().getFullYear();
+  for (let y = thisYear; y >= 1940; y--) {
+    const opt = document.createElement("option");
+    opt.value = String(y);
+    opt.textContent = String(y);
+    year.appendChild(opt);
+  }
+}
+
+/* ===== Errors (stored as translation keys so they follow the language) ===== */
+const FIELDS = {
+  name:     { input: "fullName", msg: "nameMsg" },
+  email:    { input: "email", msg: "emailMsg" },
+  phone:    { input: "phone", msg: "phoneMsg" },
+  altPhone: { input: "altPhone", msg: "altPhoneMsg" },
+  bday:     { input: "bdayMonth", msg: "bdayMsg", boxes: ["bdayMonth", "bdayDay", "bdayYear"] },
+  form:     { msg: "saveMsg" }
+};
+const FOCUS_ORDER = ["name", "email", "phone", "altPhone", "bday"];
+const errs = {};
+
+function boxesOf(key) {
+  const f = FIELDS[key];
+  const ids = f.boxes || (f.input ? [f.input] : []);
+  return ids.map((id) => byId(id).closest(".input-wrapper"));
+}
+
+function setErr(key, msgKey) {
+  errs[key] = msgKey || null;
+  byId(FIELDS[key].msg).textContent = msgKey ? tr(msgKey) : "";
+  boxesOf(key).forEach((box) => box.classList.toggle("invalid", !!msgKey));
+}
+
+function clearAll() {
+  Object.keys(FIELDS).forEach((key) => setErr(key, ""));
+}
+
+function repaintErrors() {
+  Object.keys(errs).forEach((key) => {
+    if (errs[key]) byId(FIELDS[key].msg).textContent = tr(errs[key]);
+  });
+}
+
+// Editing a field clears only that field's error (and the general save error)
+Object.keys(FIELDS).forEach((key) => {
+  const f = FIELDS[key];
+  (f.boxes || (f.input ? [f.input] : [])).forEach((id) => {
+    ["input", "change"].forEach((evt) => {
+      byId(id).addEventListener(evt, () => {
+        setErr(key, "");
+        setErr("form", "");
+      });
+    });
+  });
+});
+
+/* ===== Helpers ===== */
+function initials(name) {
+  const words = String(name || "").trim().split(/\s+/).filter(Boolean);
+  if (!words.length) return "--";
+  if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
+  return (words[0][0] + words[words.length - 1][0]).toUpperCase();
+}
+
+let currentPhoto = "";
+
+function paintAvatar(name) {
+  const el = byId("avatarInitials");
+  el.textContent = "";
+
+  if (currentPhoto) {
+    const img = document.createElement("img");
+    img.src = currentPhoto;
+    img.alt = "";
+    el.appendChild(img);
+  } else {
+    el.textContent = initials(name);
+  }
+}
+
+// Keep the sidebar in step with the saved account
+function syncSidebar() {
+  const p = Auth.profile();
+  const avatar = byId("sideAvatar");
+
+  byId("sideName").textContent = p.name || "";
+  byId("sideEmail").textContent = p.email || p.phone || "";
+
+  if (!avatar.querySelector("img")) avatar.textContent = initials(p.name);
+}
+
+/* ===== Phone numbers =====
+   The page shows "+63" beside the box, so the box holds the 10 digits (9123456789).
+   The account stores the local form (09123456789), same as sign up and login. */
+function toInputPhone(stored) {
+  const d = String(stored || "").replace(/\D/g, "");
+  if (d.length === 12 && d.startsWith("63")) return d.slice(2);
+  if (d.length === 11 && d.startsWith("0")) return d.slice(1);
+  return d;
+}
+
+// Returns { value } (value is "" when empty) or { err: translation key }
+function checkPhone(raw) {
+  const s = String(raw || "").replace(/[\s\-().]/g, "").replace(/^\+/, "");
+
+  if (!s) return { value: "" };
+  if (!/^\d+$/.test(s)) return { err: "prof.err.digits" };
+
+  let d = s;
+  if (d.length === 12 && d.startsWith("63")) d = d.slice(2);
+  else if (d.length === 11 && d.startsWith("0")) d = d.slice(1);
+
+  if (d.length !== 10) return { err: "prof.err.len" };
+  if (d[0] !== "9") return { err: "prof.err.ph" };
+
+  return { value: "0" + d };
+}
+
+// All three dropdowns or none; the date must exist and not be in the future
+function checkBirth(m, d, y) {
+  if (!m && !d && !y) return "";
+  if (!m || !d || !y) return "err.bday.incomplete";
+
+  const year = parseInt(y, 10), month = parseInt(m, 10), day = parseInt(d, 10);
+  const date = new Date(year, month - 1, day);
+
+  if (date.getFullYear() !== year || date.getMonth() !== month - 1 || date.getDate() !== day) {
+    return "err.bday.invalid";
+  }
+  if (date > new Date()) return "err.bday.future";
+
+  return "";
+}
+
+/* ===== Load the saved profile into the form ===== */
+function loadProfile() {
+  const acct = Auth.profile();
+  const extra = Auth.getData("profileExtra", {}) || {};
+
+  currentPhoto = acct.photo || "";
+
+  byId("fullName").value = acct.name || "";
+  byId("email").value = acct.email || "";
+  byId("phone").value = toInputPhone(acct.phone);
+  byId("altPhone").value = toInputPhone(extra.altPhone);
+  byId("address").value = extra.address || "";
+  byId("gender").value = extra.gender || "";
+  byId("bdayMonth").value = extra.bdayMonth ? String(extra.bdayMonth) : "";
+  byId("bdayDay").value = extra.bdayDay ? String(extra.bdayDay) : "";
+  byId("bdayYear").value = extra.bdayYear ? String(extra.bdayYear) : "";
+
+  paintAvatar(acct.name);
+}
+
+/* ===== Show / hide the two views ===== */
+function showForm() {
+  byId("successView").style.display = "none";
+  byId("formView").style.display = "block";
+  byId("fullName").focus();
+}
+
+function showSuccess() {
+  byId("formView").style.display = "none";
+  byId("successView").style.display = "flex";
+  byId("backToEditBtn").focus();
+}
+
+byId("backToEditBtn").addEventListener("click", showForm);
+
+// Initials follow the name while typing
+byId("fullName").addEventListener("input", (e) => paintAvatar(e.target.value));
+
+/* ===== Save ===== */
+byId("userDetailsForm").addEventListener("submit", (e) => {
+  e.preventDefault();
+  clearAll();
+
+  const name = byId("fullName").value.trim();
+  const emailRaw = byId("email").value.trim();
+  const email = emailRaw ? Auth.normalize(emailRaw) : "";
+  const phone = checkPhone(byId("phone").value);
+  const alt = checkPhone(byId("altPhone").value);
+  const address = byId("address").value.trim();
+  const gender = byId("gender").value;
+  const m = byId("bdayMonth").value;
+  const d = byId("bdayDay").value;
+  const y = byId("bdayYear").value;
+
+  const errors = {};
+
+  if (!name) errors.name = "prof.err.name";
+  if (email && !Auth.isEmail(email)) errors.email = "prof.err.email";
+  if (phone.err) errors.phone = phone.err;
+  if (alt.err) errors.altPhone = alt.err;
+
+  // The account is identified by its e-mail, so it can't be empty. The phone number is optional contact info.
+  if (!errors.email && !email) {
+    errors.email = "prof.err.email.empty";
+  }
+
+  const bdayErr = checkBirth(m, d, y);
+  if (bdayErr) errors.bday = bdayErr;
+
+  const bad = FOCUS_ORDER.filter((k) => errors[k]);
+
+  if (bad.length) {
+    bad.forEach((k) => setErr(k, errors[k]));
+    byId(FIELDS[bad[0]].input).focus();
+    return;
+  }
+
+  // name / email / phone live in the account so every page's sidebar stays in sync
+  const savedAccount = Auth.saveProfile({ name: name, email: email, phone: phone.value });
+  const savedExtra = Auth.setData("profileExtra", {
+    altPhone: alt.value,
+    address: address,
+    gender: gender,
+    bdayMonth: m ? parseInt(m, 10) : null,   // integers, not strings ("" -> null)
+    bdayDay: d ? parseInt(d, 10) : null,
+    bdayYear: y ? parseInt(y, 10) : null
+  });
+
+  if (!savedAccount || !savedExtra) {
+    setErr("form", "err.save");
+    return;
+  }
+
+  syncSidebar();
+  paintAvatar(name);
+  showSuccess();
+});
+
+/* ===== Start ===== */
+fillDaysAndYears();
+fillMonths();
+paintLocal();
+Auth.initSidebar();
+loadProfile();
+
+// Re-render everything that is written in code when the language changes
+window.addEventListener("langchange", () => {
+  paintLocal();
+  fillMonths();
+  repaintErrors();
+});
+  </script>
+
+</body>
+</html>

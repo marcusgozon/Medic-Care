@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en" data-guest-only>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="sig.doctitle">Medic Care | Sign Up</title>
+  <link rel="icon" type="image/png" href="../assets/medic-care-favicon.png">
+    <script src="../script/auth.js"></script>
+    <script src="../script/languages.js"></script>
+    <link rel="stylesheet" href="../styles/medic-care.css">
+</head>
+<body data-page="signup">
+
+    <main class="signup-container">
+        <form class="signup-form" id="signupForm" novalidate>
+            <img class="page-brand-logo" src="../assets/medic-care-logo.png" alt="Medic Care">
+            <h1 data-i18n="sig.h1">Create your account</h1>
+            <p class="subtitle" data-i18n="sig.sub">Let's get started!</p>
+
+            <div class="form-group">
+                <label for="name" data-i18n="prof.name">Full Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    placeholder="Enter your full name" data-i18n-ph="prof.ph.name"
+                    autocomplete="name"
+                    maxlength="200"
+                    required
+                >
+                <div class="msg" id="nameMsg"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="email" data-i18n="sig.id">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="Enter your email address" data-i18n-ph="sig.id.ph"
+                    autocomplete="username"
+                    required
+                >
+                <div class="msg" id="idMsg"></div>
+            </div>
+
+           <div  class="form-group extracted-inline-style-1">
+    <label for="password" data-i18n="sig.pw">Password</label>
+    <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Create your password" data-i18n-ph="sig.pw.ph"
+        autocomplete="new-password"
+       
+        required class="extracted-inline-style-2">
+    <button type="button"  class="eye extracted-inline-style-3" id="eye1" aria-label="Show password" onclick="toggleSignupPassword('password', 'eye1')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+            <line id="eye1-slash" x1="1" y1="1" x2="23" y2="23"></line>
+        </svg>
+    </button>
+    <div class="msg" id="pwMsg"></div>
+</div>
+
+<div  class="form-group extracted-inline-style-4">
+    <label for="confirmPassword" data-i18n="sig.cf">Confirm Password</label>
+    <input
+        type="password"
+        id="confirmPassword"
+        name="confirmPassword"
+        placeholder="Confirm your password" data-i18n-ph="sig.cf.ph"
+        autocomplete="new-password"
+       
+        required class="extracted-inline-style-5">
+    <button type="button"  class="eye extracted-inline-style-6" id="eye2" aria-label="Show password" onclick="toggleSignupPassword('confirmPassword', 'eye2')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#334155" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+            <circle cx="12" cy="12" r="3"></circle>
+            <line id="eye2-slash" x1="1" y1="1" x2="23" y2="23"></line>
+        </svg>
+    </button>
+    <div class="msg" id="cfMsg"></div>
+</div>
+
+
+            <button type="submit" class="create-button" id="submitBtn" data-i18n="sig.btn">
+                Create Account
+            </button>
+
+            <p class="login-link">
+                <span data-i18n="sig.have">Already have an account?</span>
+                <a href="login.html" data-i18n="sig.login">Log In</a>
+            </p>
+        </form>
+    </main>
+
+    <script>
+/* Sign up page. Needs auth.js and languages.js loaded first. */
+
+const byId = (id) => document.getElementById(id);
+
+const fields = {
+    name: ["name", "nameMsg"],
+    id: ["email", "idMsg"],
+    pw: ["password", "pwMsg"],
+    cf: ["confirmPassword", "cfMsg"]
+};
+
+/* ===== Text that has no entry in languages.js yet ===== */
+const LOCAL = {
+    "err.server": {
+        en: "Open the app through its backend server: run `python backend/app.py`, then visit http://127.0.0.1:5000/signup.html.",
+        fil: "Buksan ang app sa backend server: patakbuhin ang `python backend/app.py`, saka pumunta sa http://127.0.0.1:5000/signup.html."
+    },
+    "err.fail": {
+        en: "Unable to create your account. Please try again.",
+        fil: "Hindi magawa ang iyong account. Subukan muli."
+    },
+    "err.network": {
+        en: "Can't reach the server. Check your connection and try again.",
+        fil: "Hindi makakonekta sa server. Suriin ang iyong koneksyon at subukan muli."
+    },
+    "err.database": {
+        en: "Account creation is temporarily unavailable. The server cannot reach its database right now.",
+        fil: "Pansamantalang hindi makagawa ng account. Hindi maabot ng server ang database nito ngayon."
+    },
+    "err.auth": {
+        en: "The sign-up service could not be reached. Please try again shortly.",
+        fil: "Hindi maabot ang serbisyo ng pagpaparehistro. Subukan muli mamaya."
+    },
+};
+
+function tr(key) {
+    if (LOCAL[key]) return LOCAL[key][I18N.getLang()] || LOCAL[key].en;
+    return I18N.t(key);
+}
+
+/* ===== Error helpers (errors are stored as translation keys) ===== */
+const errs = {}; // field key -> translation key
+
+function setErr(key, msgKey) {
+    const [inputId, msgId] = fields[key];
+    errs[key] = msgKey || null;
+    byId(msgId).textContent = msgKey ? tr(msgKey) : "";
+    byId(inputId).classList.toggle("invalid", !!msgKey);
+}
+
+function clearAll() {
+    Object.keys(fields).forEach((key) => setErr(key, ""));
+}
+
+function repaintErrors() {
+    Object.keys(errs).forEach((key) => {
+        if (errs[key]) byId(fields[key][1]).textContent = tr(errs[key]);
+    });
+}
+
+// Clear only the error of the field being edited
+Object.keys(fields).forEach((key) => {
+    byId(fields[key][0]).addEventListener("input", () => setErr(key, ""));
+});
+
+// Re-render error messages when the language changes
+window.addEventListener("langchange", repaintErrors);
+
+/* ===== Validation (each returns a translation key, or "" if OK) ===== */
+// The 200-character name limit is already enforced by maxlength on the input.
+function validateName(name) {
+    return name ? "" : "prof.err.name";
+}
+
+function validatePassword(pw) {
+    if (pw.length < 8) return "sig.err.len";
+    if (!/[A-Za-z]/.test(pw) || !/\d/.test(pw)) return "sig.err.mix";
+    return "";
+}
+
+function validateConfirm(pw, cf) {
+    if (!cf) return "sig.err.cf";
+    if (pw !== cf) return "sig.err.match";
+    return "";
+}
+
+// Maps Auth.createUser error codes to [field key, translation key]
+const serverErrors = {
+    exists: ["id", "sig.err.exists"],
+    invalid_name: ["name", "prof.err.name"],
+    invalid_id: ["id", "sig.err.id"],
+    weak_password: ["pw", "sig.err.len"],
+    network: ["id", "err.network"],
+    server_required: ["id", "err.server"],
+    database_unavailable: ["id", "err.database"],
+    auth_unavailable: ["id", "err.auth"]
+};
+
+byId("signupForm").addEventListener("submit", (e) => {
+    e.preventDefault();
+    clearAll();
+
+    const name = byId("name").value.trim();
+    const raw = byId("email").value.trim();
+    const pw = byId("password").value;
+    const cf = byId("confirmPassword").value;
+
+    const errors = {
+        name: validateName(name),
+        id: Auth.validId(raw) ? "" : "sig.err.id",
+        pw: validatePassword(pw),
+        cf: validateConfirm(pw, cf)
+    };
+
+    // Only show the mismatch error if the password itself is valid
+    if (errors.pw && errors.cf === "sig.err.match") {
+        errors.cf = "";
+    }
+
+    let firstInvalid = null;
+    for (const key of Object.keys(fields)) {
+        setErr(key, errors[key]);
+        if (errors[key] && !firstInvalid) firstInvalid = key;
+    }
+
+    if (firstInvalid) {
+        byId(fields[firstInvalid][0]).focus();
+        return;
+    }
+
+    const res = Auth.createUser(Auth.normalize(raw), pw, { name: name });
+
+    if (!res.ok) {
+        const [key, msgKey] = serverErrors[res.error] || ["id", "err.fail"];
+        setErr(key, msgKey);
+        byId(fields[key][0]).focus();
+        return;
+    }
+
+    location.href = "login.html?created=1";
+});
+    </script>
+</body>
+</html>

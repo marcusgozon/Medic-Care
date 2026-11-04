@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" data-requires-login>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="hist.doctitle">Medical History | MEDIC CARE</title>
+  <link rel="icon" type="image/png" href="../assets/medic-care-favicon.png">
+  <script src="../script/auth.js"></script>
+  <link rel="stylesheet" href="../styles/medic-care.css">
+</head>
+<body data-page="history">
+
+  <!-- Sidebar -->
+  <div class="scrim" id="scrim"></div>
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation" aria-hidden="true">
+    <div class="side-profile">
+      <div class="side-avatar" id="sideAvatar">FP</div>
+      <div class="side-info">
+        <strong id="sideName">Final Project</strong>
+        <span id="sideEmail">finalproject@gmail.com</span>
+      </div>
+      <button class="icon-btn light" id="closeSidebar" aria-label="Close menu" data-i18n-aria="menu.close">&times;</button>
+    </div>
+    <hr>
+    <label class="side-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m20 20-4.8-4.8"/></svg>
+      <input type="search" id="navSearch" placeholder="Search..." data-i18n-ph="nav.search" aria-label="Search menu" autocomplete="off">
+    </label>
+    <nav id="nav">
+      <a href="../index.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 11.5 12 3l9 8.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span data-i18n="nav.dashboard">Dashboard</span></a>
+      <a href="profile.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3.5 21c0-4.5 3.8-7 8.5-7s8.5 2.5 8.5 7z"/></svg><span data-i18n="nav.profile">Profile</span></a>
+      <a href="appointment.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M7 2v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zM5 9h14v11H5z"/><path d="M7 11h2v2H7zm4 0h2v2h-2zm4 0h2v2h-2zM7 15h2v2H7zm4 0h2v2h-2z"/></svg><span data-i18n="nav.appointment">Appointment</span></a>
+      <a href="medical_history.html" class="active" aria-current="page"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm2 16H8v-2h8zm0-4H8v-2h8zm-3-5V3.5L18.5 9z"/></svg><span data-i18n="nav.history">Medical History</span></a>
+      <a href="settings.html"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg><span data-i18n="nav.settings">Settings</span></a>
+      <p class="no-match" id="noMatch" hidden data-i18n="nav.nomatch">No matching pages</p>
+    </nav>
+    <a href="login.html" class="logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3h5a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-5M8 8l-4 4 4 4M4 12h11"/></svg><span data-i18n="nav.logout">Logout</span></a>
+  </aside>
+
+  <div class="page">
+    <!-- Header -->
+    <header class="topbar">
+      <button class="icon-btn" id="menuBtn" aria-label="Open menu" data-i18n-aria="menu.open" aria-expanded="false" aria-controls="sidebar">
+        <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><path d="M2 5h18M2 11h18M2 17h18" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
+      </button>
+      <div class="brand">
+        <span class="brand-name">MEDIC CARE</span>
+        <img class="brand-logo" src="../assets/medic-care-logo.png" alt="Medic Care">
+      </div>
+    </header>
+
+    <!-- Main content -->
+    <main>
+      <div class="page-head history-head">
+        <h1 data-i18n="hist.h1">Medical History</h1>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Record types">
+        <button class="tab active" role="tab" aria-selected="true"  data-type="all" data-i18n="tab.all">All Records</button>
+        <button class="tab"        role="tab" aria-selected="false" data-type="consultation" data-i18n="tab.consultation">Consultations</button>
+        <button class="tab"        role="tab" aria-selected="false" data-type="lab" data-i18n="tab.lab">Lab Results</button>
+        <button class="tab"        role="tab" aria-selected="false" data-type="prescription" data-i18n="tab.prescription">Prescriptions</button>
+      </div>
+
+      <section class="table-card" aria-label="Medical records">
+        <div class="thead" role="row">
+          <button class="th-sort" id="sortDate" aria-label="Sort by date" data-i18n-aria="sort.date"><span data-i18n="th.date">Date</span><span class="arrows" aria-hidden="true"><i class="up"></i><i class="down"></i></span></button>
+          <div data-i18n="th.doctor">Doctors &amp; Specialty</div>
+          <div data-i18n="th.diag">Diagnosis</div>
+          <div><span class="sr-only" data-i18n="th.status">Status</span></div>
+          <div class="center" data-i18n="th.actions">Actions</div>
+        </div>
+        <div class="tbody" id="records" aria-live="polite"></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Details modal -->
+  <div class="modal" id="detailsModal" role="dialog" aria-modal="true" aria-labelledby="detailsTitle" hidden>
+    <div class="modal-card">
+      <h2 id="detailsTitle" data-i18n="det.title">Record details</h2>
+      <dl class="details" id="detailsBody"></dl>
+      <div class="modal-actions">
+        <button class="btn-primary" data-close data-i18n="common.close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../script/languages.js"></script>
+  <script>
+/* MEDIC CARE – Medical History page (saved to MySQL through the Flask API via auth.js) */
+
+/* --- Data ---
+   Records come straight from the appointments, so booking / rescheduling /
+   cancelling shows up here automatically.
+   Record shape:
+   { id, type: "consultation" | "lab" | "prescription", date: "2026-10-24",
+     doctor: "Dr. Name", specialty: "Pediatrics", photo: "images/dr.jpg" (optional),
+     diagnosis: "Acute Tonsillitis", status: "Completed" | "Pending" | "Cancelled", notes: "optional" }
+*/
+const DOCS = {
+  celestia:  ["Dr. Celestia Santos", "OB GYN"],
+  rich:      ["Dr. Rich Reyes", "PEDIATRICS"],
+  sebastian: ["Dr. Sebastian Reed", "CARDIOLOGY"],
+  mich:      ["Dr. Mich Collins", "OB GYN"],
+  ana:       ["Dr. Ana Lim", "DERMATOLOGY"],
+  paolo:     ["Dr. Paolo Cruz", "GENERAL MEDICINE"],
+};
+const pretty = (s) => String(s || "").toLowerCase().replace(/\b[a-z]/g, (c) => c.toUpperCase());
+
+function loadRecords() {
+  return Auth.getAppointments().map((a) => {
+    const known = DOCS[a.doctor];
+    const specific = a.specific || "";
+    return {
+      id: a.id,
+      type: /lab|ultrasound/i.test(specific) ? "lab" : "consultation",
+      date: a.date,
+      doctor: known ? known[0] : (a.doctorName || "Doctor"),
+      specialty: known ? known[1] : (a.spec || ""),
+      diagnosis: specific ? pretty(specific) : (a.service || "—"),
+      status: a.status || "Pending",
+      state: Auth.recordState(a),          // Pending | Cancelled | Completed
+      notes: a.time ? "Time: " + a.time : ""
+    };
+  });
+}
+let records = loadRecords();
+
+/* --- Helpers --- */
+const $ = (id) => document.getElementById(id);
+const t = (k, v) => (window.I18N ? I18N.t(k, v) : k);
+const monthNames = () => (window.I18N ? I18N.months() : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]);
+const statusLabel = (s) => (window.I18N ? I18N.status(s) : s);
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+function fmtDate(iso) {
+  const [y, m, d] = iso.split("-").map(Number);
+  return `${monthNames()[m - 1]} ${d}, ${y}`;
+}
+function initials(name) {
+  return name.replace(/^Dr\.?\s*/i, "").split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+}
+
+/* --- State --- */
+let activeType = "all";
+let sortDir = "desc"; // newest first
+
+/* --- Render --- */
+function render() {
+  const list = records
+    .filter((r) => activeType === "all" || r.type === activeType)
+    .sort((a, b) => (sortDir === "asc" ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date)));
+
+  const body = $("records");
+  if (!list.length) {
+    body.innerHTML = `<div class="empty-state"><div><strong>${t("empty.title", { label: t("lbl." + activeType) })}</strong>${t("empty.body", { label: t("lbl." + activeType) })}</div></div>`;
+    return;
+  }
+  body.innerHTML = list.map((r) => {
+    const shown = r.state === "Completed" ? "Completed" : r.status;
+    return `
+    <div class="row-item" role="row">
+      <div class="r-date">${esc(fmtDate(r.date))}</div>
+      <div class="r-doc">
+        <div class="avatar">${r.photo ? `<img src="${esc(r.photo)}" alt="${esc(r.doctor)}">` : esc(initials(r.doctor))}</div>
+        <div><p class="r-name">${esc(r.doctor)}</p><p class="r-spec">${esc(r.specialty)}</p></div>
+      </div>
+      <div class="r-diag">${esc(r.diagnosis)}</div>
+      <div class="r-status"><span class="status ${esc(shown.toLowerCase())}">${esc(statusLabel(shown))}</span></div>
+      <div class="r-action"><span class="action-note ${esc(String(r.state).toLowerCase())}">${esc(statusLabel(r.state))}</span></div>
+    </div>`;
+  }).join("");
+}
+
+/* --- Tabs --- */
+document.querySelectorAll(".tab").forEach((tab) => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach((el) => {
+      const on = el === tab;
+      el.classList.toggle("active", on);
+      el.setAttribute("aria-selected", String(on));
+    });
+    activeType = tab.dataset.type;
+    render();
+  });
+});
+
+/* ---- Sort ---- */
+const sortBtn = $("sortDate");
+sortBtn.dataset.dir = sortDir;
+sortBtn.addEventListener("click", () => {
+  sortDir = sortDir === "desc" ? "asc" : "desc";
+  sortBtn.dataset.dir = sortDir;
+  render();
+});
+
+/* --- Details modal --- */
+$("records").addEventListener("click", (e) => {
+  const btn = e.target.closest(".btn-details");
+  if (!btn) return;
+  const r = records.find((x) => String(x.id) === btn.dataset.id);
+  if (!r) return;
+  $("detailsBody").innerHTML = `
+    <dt>${t("th.date")}</dt><dd>${esc(fmtDate(r.date))}</dd>
+    <dt>${t("det.doctor")}</dt><dd>${esc(r.doctor)} (${esc(r.specialty)})</dd>
+    <dt>${t("th.diag")}</dt><dd>${esc(r.diagnosis)}</dd>
+    <dt>${t("th.status")}</dt><dd>${esc(statusLabel(r.status))}</dd>
+    <dt>${t("det.notes")}</dt><dd>${esc(r.notes || t("det.nonotes"))}</dd>`;
+  $("detailsModal").hidden = false;
+});
+
+function closeModals() { document.querySelectorAll(".modal").forEach((m) => (m.hidden = true)); }
+document.querySelectorAll(".modal").forEach((m) => {
+  m.addEventListener("click", (e) => { if (e.target === m || e.target.hasAttribute("data-close")) closeModals(); });
+});
+
+/* --- Sidebar (shared, see auth.js) --- */
+const { setSidebar } = Auth.initSidebar();
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") { closeModals(); setSidebar(false); }
+});
+
+render();
+
+// Re-draw the table when the language changes
+window.addEventListener("langchange", render);
+  </script>
+
+</body>
+</html>
