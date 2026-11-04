@@ -7,14 +7,25 @@
   <title data-i18n="home.doctitle">Home | MEDIC CARE</title>
   <link rel="icon" type="image/png" href="assets/medic-care-favicon.png">
   <script src="script/auth.js"></script>
+  <script>
+    document.documentElement.classList.toggle(
+      "home-authenticated",
+      Boolean(window.Auth && Auth.current())
+    );
+  </script>
+  <script src="script/theme.js"></script>
   <link rel="stylesheet" href="styles/medic-care.css">
+  <link rel="stylesheet" href="styles/home.css">
+  <link rel="stylesheet" href="styles/polish.css">
+  <script src="script/notifications.js" defer></script>
+  <script src="script/profile-avatar.js" defer></script>
 </head>
 
 <body data-page="home">
 
   <!-- Sidebar -->
   <div class="scrim" id="scrim"></div>
-  <aside class="sidebar" id="sidebar" aria-label="Main navigation" aria-hidden="true">
+  <aside class="sidebar" id="sidebar" aria-label="Main navigation" aria-hidden="true" data-home-auth-only>
     <div class="side-profile">
       <div class="side-avatar" id="sideAvatar">FP</div>
       <div class="side-info">
@@ -67,28 +78,78 @@
   <main class="site">
 
     <!-- Hero -->
-    <section class="hero">
+    <section class="hero" id="home">
       <header class="topbar">
         <button class="icon-btn" id="menuBtn" aria-label="Open menu" data-i18n-aria="menu.open" aria-expanded="false"
+          data-home-auth-only
           aria-controls="sidebar">
           <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
             <path d="M2 5h18M2 11h18M2 17h18" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
           </svg>
         </button>
-        <div class="brand">
+        <div class="brand" data-home-guest-only>
+          <img class="brand-logo" src="assets/medic-care-logo.png" alt="Medic Care">
+        </div>
+        <div class="brand" data-home-auth-only>
           <span class="brand-name">MEDIC CARE</span>
           <img class="brand-logo" src="assets/medic-care-logo.png" alt="Medic Care">
+        </div>
+        <nav class="desktop-nav" data-home-auth-only aria-label="Main navigation">
+          <a class="active" href="index.html" aria-current="page" data-i18n="nav.dashboard">Dashboard</a>
+          <a href="pages/profile.html" data-i18n="nav.profile">Profile</a>
+          <a href="pages/appointment.html" data-i18n="nav.appointment">Appointment</a>
+          <a href="pages/medical_history.html" data-i18n="nav.history">Medical History</a>
+          <a href="pages/settings.html" data-i18n="nav.settings">Settings</a>
+          <a class="logout" href="pages/login.html" data-i18n="nav.logout">Logout</a>
+        </nav>
+        <nav class="home-guest-nav" data-home-guest-only aria-label="Main navigation">
+          <a class="active" href="#home">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="m3 11 9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" />
+            </svg>
+            <span data-i18n="home.nav">Home</span>
+          </a>
+          <a href="pages/booking.html?book=1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="5" width="18" height="16" rx="2" />
+              <path d="M16 3v4M8 3v4M3 10h18" />
+            </svg>
+            <span data-i18n="home.navBook">Book Appointment</span>
+          </a>
+        </nav>
+        <div class="home-auth-actions" data-home-guest-only>
+          <a class="home-auth-link home-auth-login" href="pages/login.html" data-i18n="log.btn">Sign In</a>
+          <a class="home-auth-link home-auth-signup" href="pages/signup.html" data-i18n="log.signup">Sign up</a>
         </div>
       </header>
 
       <div class="hero-copy">
-        <h1 data-i18n="home.title">A Great Place Care for yourself</h1>
-        <p class="lead" data-i18n="home.lead">Our public medical facility is deeply committed to delivering accessible,
-          safe, and professional healthcare solutions straight to your community.</p>
-        <a class="book" href="pages/booking.html?" data-i18n="home.book">BOOK APPOINTMENT</a>
+        <div class="home-eyebrow" data-home-guest-only>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M2 12h4l2-7 4 14 3-10 2 6h5" />
+          </svg>
+          <span data-i18n="home.eyebrow">Your Health, Our Priority</span>
+        </div>
+        <h1>
+          <span class="home-title-line" data-i18n="home.titleLine1">Care for your</span>
+          <span class="home-title-accent" data-i18n="home.titleLine2">health with confidence</span>
+        </h1>
+        <p class="lead" data-i18n="home.lead">Book appointments, consult trusted doctors, and get the care you deserve — anytime, anywhere.</p>
+        <a class="book" href="pages/booking.html?book=1">
+          <svg class="home-book-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="16" rx="2" />
+            <path d="M16 3v4M8 3v4M3 10h18" />
+          </svg>
+          <span data-i18n="home.book">Book Appointment</span>
+          <svg class="home-book-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+        </a>
       </div>
 
-      <div class="hero-stats">
+      <div class="hero-stats" data-home-auth-only>
         <div class="rating"><strong data-i18n="home.rating">4.9/5 Ratings</strong><span class="stars"
             aria-hidden="true">★★★★★</span></div>
         <div class="hours">
@@ -112,7 +173,7 @@
     </section>
 
     <!-- Services -->
-    <section class="services" aria-labelledby="svcTitle">
+    <section class="services" aria-labelledby="svcTitle" data-home-auth-only>
       <h2 id="svcTitle" data-i18n="home.services">OUR SERVICES</h2>
       <ul class="svc-bar">
         <li><a href="pages/booking.html?book=1&amp;spec=OB%20GYN"><span class="svc-ico"><svg viewBox="0 0 24 24" fill="none"
@@ -162,7 +223,7 @@
     </section>
 
     <!-- About + contact -->
-    <section class="info">
+    <section class="info" data-home-auth-only>
       <article class="about">
         <h2 data-i18n="home.about">ABOUT US</h2>
         <p data-i18n="home.about1">Medic Care, your trusted partner in healthcare. We are dedicated to making healthcare

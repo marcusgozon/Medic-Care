@@ -8,8 +8,11 @@
   <link rel="icon" type="image/png" href="../assets/medic-care-favicon.png">
   <script src="../script/auth.js"></script>
   <script src="../script/languages.js"></script>
+  <script src="../script/theme.js"></script>
 
   <link rel="stylesheet" href="../styles/medic-care.css">
+  <link rel="stylesheet" href="../styles/login.css">
+  <link rel="stylesheet" href="../styles/polish.css">
 </head>
 
 <body data-page="login">
@@ -18,37 +21,83 @@
     <div class="left">
       <form class="form" id="loginForm" novalidate>
         <img class="page-brand-logo" src="../assets/medic-care-logo.png" alt="Medic Care">
-        <h1 data-i18n="log.h1">Login</h1>
-        <p class="sub" data-i18n="log.sub">Log in to your account.</p>
-
-        <label for="email" data-i18n="log.id">Email</label>
-        <div class="field">
-          <input id="email" type="email" placeholder="Enter your email address" data-i18n-ph="log.id.ph"
-            autocomplete="username">
+        <div class="login-tabs" role="tablist" aria-label="Sign in as">
+          <button class="login-tab active" id="patientTab" type="button" role="tab" aria-selected="true"
+            aria-controls="patientLoginPanel" data-login-tab="patient" data-i18n="log.tab.patient">Patient</button>
+          <button class="login-tab" id="adminTab" type="button" role="tab" aria-selected="false"
+            aria-controls="adminLoginPanel" data-login-tab="admin" data-i18n="log.tab.admin">Admin</button>
         </div>
-        <div class="msg" id="emailMsg"></div>
 
-        <label for="pw" data-i18n="log.pw">Password</label>
-        <div class="field">
-          <input id="pw" type="password" placeholder="Enter your password" data-i18n-ph="log.pw.ph"
-            autocomplete="current-password" class="extracted-inline-style-1">
-          <button type="button" class="eye" id="eye" aria-label="Show password">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2">
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
-              <circle id="pupil" cx="12" cy="12" r="3" fill="#444" />
-            </svg>
-          </button>
-        </div>
-        <div class="msg" id="pwMsg"></div>
+        <section id="patientLoginPanel" class="login-panel" role="tabpanel" aria-labelledby="patientTab">
+          <h1 data-i18n="log.h1">Login</h1>
+          <p class="sub" data-i18n="log.sub">Log in to your account.</p>
 
-        <a class="forgot" href="#" id="forgotLink" data-i18n="log.forgot">Forgot Password?</a>
+          <label for="email" data-i18n="log.id">Email</label>
+          <div class="field">
+            <input id="email" type="email" placeholder="Enter your email address" data-i18n-ph="log.id.ph"
+              autocomplete="username">
+          </div>
+          <div class="msg" id="emailMsg"></div>
 
-        <button class="btn" type="submit" data-i18n="log.btn">Sign In</button>
+          <label for="pw" data-i18n="log.pw">Password</label>
+          <div class="field">
+            <input id="pw" type="password" placeholder="Enter your password" data-i18n-ph="log.pw.ph"
+              autocomplete="current-password" class="extracted-inline-style-1">
+            <button type="button" class="eye" id="eye" aria-label="Show password">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
+                <circle id="pupil" cx="12" cy="12" r="3" fill="#444" />
+              </svg>
+            </button>
+          </div>
+          <div class="msg" id="pwMsg"></div>
 
-        <div class="signup">
-          <span data-i18n="log.nosign">Don't have an account?</span>
-          <a href="signup.html" id="signup" data-i18n="log.signup">Sign up</a>
-        </div>
+          <a class="forgot" href="#" id="forgotLink" data-i18n="log.forgot">Forgot Password?</a>
+
+          <button class="btn" type="submit" data-i18n="log.btn">Sign In</button>
+
+          <div class="signup">
+            <span data-i18n="log.nosign">Don't have an account?</span>
+            <a href="signup.html" id="signup" data-i18n="log.signup">Sign up</a>
+          </div>
+        </section>
+
+        <section id="adminLoginPanel" class="login-panel" role="tabpanel" aria-labelledby="adminTab" hidden>
+          <h1 data-i18n="log.admin.title">Admin Login</h1>
+          <p class="sub" data-i18n="log.admin.sub">Sign in with your administrator account.</p>
+
+          <div id="adminCredentials">
+            <label for="adminEmail" data-i18n="log.admin.email">Admin email</label>
+            <div class="field">
+              <input id="adminEmail" type="email" placeholder="Enter your admin email" data-i18n-ph="log.admin.email.ph"
+                autocomplete="username">
+            </div>
+            <label for="adminPassword" data-i18n="log.pw">Password</label>
+            <div class="field">
+              <input id="adminPassword" type="password" placeholder="Enter your password" autocomplete="current-password">
+              <button type="button" class="eye" id="adminEye" aria-label="Show password">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#444" stroke-width="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z" />
+                  <circle cx="12" cy="12" r="3" />
+                  <line id="adminEyeSlash" x1="1" y1="1" x2="23" y2="23" />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div id="adminVerification" hidden>
+            <p class="admin-code-prompt">Enter the 6-digit verification code sent to <strong id="adminEmailDisplay"></strong>.</p>
+            <label for="adminCode">Verification code</label>
+            <div class="field">
+              <input id="adminCode" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6"
+                placeholder="000000" autocomplete="one-time-code">
+            </div>
+            <button class="admin-resend" id="adminResend" type="button">Didn't get the code? Resend</button>
+          </div>
+
+          <p class="msg admin-msg" id="adminMsg" role="status" aria-live="polite"></p>
+          <button class="btn" type="submit" id="adminSubmit" data-i18n="log.admin.continue">Continue</button>
+        </section>
       </form>
     </div>
 
@@ -117,16 +166,17 @@
 
   <div class="toast" id="toast"></div>
 
+  <script src="../script/admin-login.js"></script>
   <script>
     /* Login page. Needs auth.js and languages.js loaded first. */
+
+    I18N.apply();
 
     const byId = (id) => document.getElementById(id);
 
     /* ===== Settings ===== */
     const RESEND_SECONDS = 30;
 
-    // "reason" values from Auth.verify() that mean the account does not exist.
-    // Adjust to match what backend/app.py returns from /verify.
     const NOT_FOUND_REASONS = ["not_found", "none", "no_account", "no_user"];
 
     /* ===== Text that has no entry in languages.js yet ===== */
@@ -142,6 +192,10 @@
       "err.tooMany": {
         en: "Too many attempts. Please wait a moment and try again.",
         fil: "Masyadong maraming pagsubok. Maghintay muna at subukan muli."
+      },
+      "log.err.banned": {
+        en: "This account has been banned or disabled by an administrator.",
+        fil: "Ang account na ito ay na-ban o na-disable ng administrator."
       }
     };
 
@@ -190,7 +244,7 @@
     });
 
     /* ===== Error helpers (errors are stored as translation keys) ===== */
-    const errs = {}; // msgId -> translation key
+    const errs = {}; 
 
     function setError(inputId, msgId, key) {
       errs[msgId] = key || null;
@@ -209,7 +263,6 @@
       setError("pw", "pwMsg", "");
     }
 
-    // Typing in a field clears only that field's error
     byId("email").addEventListener("input", () => setError("email", "emailMsg", ""));
     byId("pw").addEventListener("input", () => setError("pw", "pwMsg", ""));
     byId("fEmail").addEventListener("input", () => setError("fEmail", "fMsg", ""));
@@ -217,6 +270,11 @@
     /* ===== Login ===== */
     byId("loginForm").addEventListener("submit", (e) => {
       e.preventDefault();
+      if (document.body.dataset.loginMode === "admin") {
+        window.AdminLogin.submit();
+        return;
+      }
+
       clearErrors();
 
       const raw = byId("email").value.trim();
@@ -241,7 +299,6 @@
         return;
       }
 
-      // Step 1: check the password
       const check = Auth.verify(id, pw);
 
       if (!check.ok) {
@@ -263,6 +320,10 @@
         } else if (check.reason === "auth_unavailable" || check.reason === "database_unavailable") {
           setError("pw", "pwMsg", "err.server");
           byId("pw").focus();
+        } else if (check.reason === "account_banned") {
+          // --- ADDED BANNED HANDLING HERE ---
+          setError("pw", "pwMsg", "log.err.banned");
+          byId("pw").focus();
         } else if (check.reason === "bad") {
           setError("pw", "pwMsg", "log.err.bad");
           byId("pw").focus();
@@ -273,19 +334,20 @@
         return;
       }
 
-      // Step 1b: the server e-mailed a link. Wait until it is opened, then continue to step 2.
       if (check.needsEmail) {
         startVerify(check.id || id, check.email);
         return;
       }
 
-      // Step 2: start the session
       const login = Auth.login(check.id || id);
 
       if (!login.ok) {
         if (NOT_FOUND_REASONS.includes(login.reason)) {
           setError("email", "emailMsg", "log.err.none");
           byId("email").focus();
+        } else if (login.reason === "account_banned") {
+           setError("pw", "pwMsg", "log.err.banned");
+           byId("pw").focus();
         } else if (login.reason === "server_required") {
           setError("pw", "pwMsg", "err.server");
           byId("pw").focus();
@@ -335,7 +397,7 @@
           if (s.expired) { stopVerify(); hideModals(); toast(t("log.v.expired")); return; }
           if (!s.confirmed) return;
           stopVerify();
-          const r = Auth.login(verifyId);                 // the link was opened: start the session
+          const r = Auth.login(verifyId);
           if (r.ok) { location.href = Auth.HOME; return; }
           hideModals();
           toast(t("err.fail"));
@@ -356,7 +418,6 @@
     byId("forgotLink").addEventListener("click", (e) => {
       e.preventDefault();
 
-      // Pre-fill with what the user already typed, if it is an email
       const typed = Auth.normalize(byId("email").value);
       byId("fEmail").value = Auth.isEmail(typed) ? typed : "";
 
@@ -432,7 +493,6 @@
       location.href = "mailto:" + sentEmail;
     });
 
-    /* ===== Re-render dynamic text when the language changes ===== */
     window.addEventListener("langchange", () => {
       repaintErrors();
       paintEye();
@@ -442,7 +502,6 @@
 
     paintEye();
 
-    /* ===== Message after signing up ===== */
     if (new URLSearchParams(location.search).get("created") === "1") {
       toast(t("log.t.created"));
     }

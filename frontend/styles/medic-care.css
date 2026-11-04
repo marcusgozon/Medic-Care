@@ -1,4 +1,4 @@
-/* Medic Care - consolidated, page-scoped styles */ body:is([data-page="home"],[data-page="appointments"],[data-page="profile"],[data-page="history"],[data-page="settings"]){
+body:is([data-page="home"],[data-page="appointments"],[data-page="profile"],[data-page="history"],[data-page="settings"]){
   --ink: #0c1b3a;
   --ink-2: #3a4764;
   --muted: #6b7794;
@@ -2188,12 +2188,13 @@ body[data-page="login"] .extracted-inline-style-1{
           display: flex;
           justify-content: center;
           align-items: center;
-          padding: 32px 20px;
+          padding: 25px 18px;
         }
         body[data-page="signup"] .signup-form{
           width: 100%;
-          max-width: 460px;
-          padding: 30px 28px 26px;
+          max-width: 360px;
+          padding: 0 20px 15px 20px; 
+          box-sizing: border-box;
         }
         body[data-page="signup"] .signup-form h1{
           font-size: 25px;
@@ -2207,7 +2208,7 @@ body[data-page="login"] .extracted-inline-style-1{
           margin-bottom: 28px;
         }
         body[data-page="signup"] .form-group{
-          margin-bottom: 16px;
+          margin-bottom: 1px;
         }
         body[data-page="signup"] .form-group label{
           display: block;
@@ -2217,8 +2218,8 @@ body[data-page="login"] .extracted-inline-style-1{
         }
         body[data-page="signup"] .form-group input{
           width: 100%;
-          height: 48px;
-          padding: 0 16px;
+          height: 43px;
+          padding: 0 14px;
           border: 1px solid #78869b;
           border-radius: 25px;
           background: transparent;
@@ -2263,8 +2264,7 @@ body[data-page="login"] .extracted-inline-style-1{
         }
         @media screen and (max-width: 480px){
           body[data-page="signup"] .signup-form{
-            max-width: 100%;
-            padding: 24px 18px 22px;
+            max-width: 340px;
           }
           body[data-page="signup"] .signup-form h1{
             font-size: 23px;
@@ -3027,7 +3027,6 @@ body[data-page="login"] .extracted-inline-style-1{
               margin: 0 auto 12px;
             }
 
-/* Final blue theme overrides */
 body[data-page] {
   --ink: #14284f;
   --ink-2: #3c5078;
@@ -3272,4 +3271,287 @@ body[data-page="appointments"] .card:nth-child(4) { animation-delay: .24s; }
     scroll-behavior: auto !important;
     transition-duration: .01ms !important;
   }
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .desktop-nav {
+  display: none;
+}
+
+@media (min-width: 980px) {
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .topbar > #menuBtn {
+    display: none;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .desktop-nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: clamp(2px, .7vw, 10px);
+    margin-left: auto;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .desktop-nav a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 9px clamp(8px, .9vw, 14px);
+    border-radius: 999px;
+    color: #435577;
+    font-size: clamp(12px, .95vw, 14px);
+    font-weight: 650;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color .18s ease, background .18s ease, transform .18s ease;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .desktop-nav a:hover {
+    transform: translateY(-1px);
+    background: #edf4ff;
+    color: #1f5fd6;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .desktop-nav a.active {
+    background: #eaf1ff;
+    color: #1f5fd6;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .desktop-nav a.logout {
+    color: #a74452;
+  }
+}
+
+@media (max-width: 979px) {
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .topbar > #menuBtn {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    flex: none;
+    border: 1px solid #dce6f5;
+    border-radius: 14px;
+    background: #f7faff;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .topbar > #menuBtn:hover {
+    background: #edf4ff;
+    border-color: #c8d9f3;
+  }
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-menu {
+  position: relative;
+  flex: none;
+  margin-left: 8px;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-trigger {
+  position: relative;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid #dce6f5;
+  border-radius: 14px;
+  background: #f7faff;
+  color: #193969;
+  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-trigger:hover {
+  transform: translateY(-1px);
+  border-color: #c8d9f3;
+  background: #edf4ff;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-trigger svg {
+  width: 21px;
+  height: 21px;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: grid;
+  min-width: 19px;
+  height: 19px;
+  place-items: center;
+  padding: 0 5px;
+  border: 2px solid #fff;
+  border-radius: 999px;
+  background: #e34e5b;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-count[hidden] {
+  display: none;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-tray {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 70;
+  width: min(380px, calc(100vw - 32px));
+  max-height: min(520px, calc(100vh - 100px));
+  overflow: hidden;
+  border: 1px solid #dce6f5;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 20px 56px rgba(13, 37, 83, .2);
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-tray[hidden] {
+  display: none;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-tray-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 54px;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e7edf7;
+  color: #16315f;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-close {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #62728f;
+  font-size: 24px;
+  line-height: 1;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-close:hover {
+  background: #edf4ff;
+  color: #1f5fd6;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-list {
+  max-height: min(460px, calc(100vh - 160px));
+  overflow-y: auto;
+  padding: 6px;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-item {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 14px 32px 14px 12px;
+  border: 0;
+  border-radius: 13px;
+  background: transparent;
+  color: #364966;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-item:hover {
+  background: #f2f6fd;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-item.unread {
+  background: #f2f7ff;
+  color: #173a72;
+  font-weight: 650;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-unread-dot {
+  position: absolute;
+  top: 50%;
+  right: 13px;
+  width: 8px;
+  height: 8px;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: #2672dc;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-empty {
+  margin: 0;
+  padding: 24px 16px;
+  color: #7181a0;
+  text-align: center;
+  font-size: 13px;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 90;
+  width: min(420px, calc(100vw - 32px));
+  padding: 16px 20px;
+  border: 1px solid #d5e3f7;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 16px 42px rgba(13, 37, 83, .2);
+  color: #173a72;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.5;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+body[data-page="signup"] .extracted-inline-style-1 {
+  position: relative;
+}
+
+body[data-page="signup"] .extracted-inline-style-2 {
+  padding-right: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+body[data-page="signup"] .extracted-inline-style-3 {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+body[data-page="signup"] .extracted-inline-style-4 {
+  position: relative;
+}
+
+body[data-page="signup"] .extracted-inline-style-5 {
+  padding-right: 40px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+body[data-page="signup"] .extracted-inline-style-6 {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
 }

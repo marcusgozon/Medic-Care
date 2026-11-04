@@ -1,0 +1,345 @@
+html:not(.home-authenticated) [data-home-auth-only],
+html.home-authenticated [data-home-guest-only] {
+  display: none !important;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .site {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .hero {
+  min-height: 100vh;
+  min-height: 100svh;
+  padding: 18px clamp(16px, 2.5vw, 36px) 28px;
+  border: 0;
+  border-radius: 0;
+  background-color: #073a7e;
+  background-image: url("../assets/landing-hero-photo.png");
+  background-position: center;
+  background-size: cover;
+  box-shadow: none;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .hero::before {
+  background: linear-gradient(90deg, rgba(2, 35, 83, .12), rgba(2, 35, 83, .04) 48%, transparent 76%);
+}
+
+html:not(.home-authenticated) body[data-page="home"] .hero .topbar {
+  display: grid;
+  grid-template-columns: minmax(170px, 1fr) auto minmax(170px, 1fr);
+  gap: 20px;
+  width: 100%;
+  height: 68px;
+  padding: 0 18px;
+  border: 1px solid rgba(255, 255, 255, .7);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .94);
+  box-shadow: 0 10px 32px rgba(3, 26, 61, .14);
+}
+
+html:not(.home-authenticated) body[data-page="home"] .brand {
+  display: flex;
+  align-items: center;
+  justify-self: start;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .brand-logo {
+  display: block;
+  width: clamp(170px, 16vw, 210px);
+  height: 54px;
+  object-fit: cover;
+  object-position: center;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-guest-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  gap: clamp(14px, 2vw, 30px);
+  white-space: nowrap;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-guest-nav a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  height: 100%;
+  color: #14284f;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: color .18s;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-guest-nav svg {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-guest-nav a:hover,
+html:not(.home-authenticated) body[data-page="home"] .home-guest-nav a.active {
+  color: #0867e9;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-guest-nav a.active::after {
+  position: absolute;
+  right: 0;
+  bottom: 8px;
+  left: 0;
+  height: 3px;
+  border-radius: 99px;
+  background: #0867e9;
+  content: "";
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-auth-actions {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: 10px;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-auth-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 9px 20px;
+  border: 1.5px solid #1972f5;
+  border-radius: 999px;
+  color: #0867e9;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform .18s, background .18s, color .18s;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-auth-link:hover {
+  transform: translateY(-1px);
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-auth-login {
+  background: transparent;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-auth-login:hover {
+  background: #edf4ff;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-auth-signup {
+  border-color: #0867e9;
+  background: #0867e9;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(8, 103, 233, .22);
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-auth-signup:hover {
+  background: #0056cc;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .hero-copy {
+  width: min(680px, 58%);
+  max-width: none;
+  margin: auto 0;
+  padding: 50px 0 65px clamp(12px, 2.2vw, 34px);
+  animation: home-hero-enter .7s cubic-bezier(.2, .75, .25, 1) both;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 22px;
+  padding: 11px 18px;
+  border: 1px solid rgba(219, 238, 255, .34);
+  border-radius: 999px;
+  background: rgba(204, 229, 255, .14);
+  color: #f0f7ff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .01em;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-eyebrow svg {
+  width: 24px;
+  height: 24px;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .hero h1 {
+  max-width: 10ch;
+  color: #fff;
+  font-size: clamp(3.2rem, 6.5vw, 6rem);
+  font-weight: 800;
+  letter-spacing: -.055em;
+  line-height: .99;
+  text-wrap: balance;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-title-line,
+html:not(.home-authenticated) body[data-page="home"] .home-title-accent {
+  display: block;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-title-accent {
+  color: #48adff;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .lead {
+  max-width: 48ch;
+  margin-top: 22px;
+  color: rgba(240, 246, 255, .92);
+  font-size: clamp(16px, 1.7vw, 20px);
+  line-height: 1.55;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .book {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 58px;
+  gap: 10px;
+  margin-top: 28px;
+  padding: 15px 28px;
+  border-radius: 999px;
+  background: #0867e9;
+  box-shadow: 0 12px 28px rgba(0, 50, 130, .25);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  text-transform: none;
+  transition: transform .18s, background .18s, box-shadow .18s;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-book-icon {
+  width: 20px;
+  height: 20px;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-book-arrow {
+  width: 18px;
+  height: 18px;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .book::first-letter {
+  text-transform: none;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .book:hover {
+  transform: translateY(-2px);
+  background: #0056cc;
+  box-shadow: 0 16px 32px rgba(0, 50, 130, .32);
+}
+
+@keyframes home-hero-enter {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  html:not(.home-authenticated) body[data-page="home"] .hero .topbar {
+    grid-template-columns: minmax(135px, 1fr) auto minmax(145px, 1fr);
+    gap: 12px;
+    padding: 0 14px;
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .home-guest-nav {
+    gap: 14px;
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .home-guest-nav a {
+    font-size: 12px;
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .home-auth-actions {
+    gap: 6px;
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .home-auth-link {
+    min-height: 38px;
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  html:not(.home-authenticated) body[data-page="home"] .hero {
+    min-height: 100vh;
+    min-height: 100svh;
+    padding: 12px;
+    background-position: 38% center;
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .hero::before {
+    background: linear-gradient(90deg, rgba(2, 35, 83, .48), rgba(2, 35, 83, .25) 68%, rgba(2, 35, 83, .12));
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .hero .topbar {
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    height: 58px;
+    padding: 0 10px;
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .brand-logo {
+    width: clamp(130px, 36vw, 165px);
+    height: 46px;
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .home-guest-nav {
+    display: none;
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .home-auth-link {
+    min-height: 36px;
+    padding: 7px 11px;
+    font-size: 11px;
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .hero-copy {
+    width: min(100%, 560px);
+    padding: 32px 10px 40px;
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .home-eyebrow {
+    gap: 8px;
+    margin-bottom: 18px;
+    padding: 9px 13px;
+    font-size: 12px;
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .hero h1 {
+    max-width: 10ch;
+    font-size: clamp(3rem, 12vw, 4.6rem);
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .lead {
+    max-width: 40ch;
+    margin-top: 16px;
+    font-size: 16px;
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .book {
+    min-height: 52px;
+    margin-top: 22px;
+    padding: 13px 22px;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html:not(.home-authenticated) body[data-page="home"] .hero-copy,
+  html:not(.home-authenticated) body[data-page="home"] .home-auth-link,
+  html:not(.home-authenticated) body[data-page="home"] .home-guest-nav a,
+  html:not(.home-authenticated) body[data-page="home"] .book {
+    animation: none;
+    transition: none;
+  }
+}

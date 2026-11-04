@@ -1,0 +1,10 @@
+- improve overall ui but dont change the color theme. add light gradient bg and fix spacing make it look professional
+- make navbar lookbetter and more modern looking
+- make mobile view look better
+- make the profile icon changable on profile tab and can be stored on the databse. then update schema sql to add new tables for the profile photo
+- deploy website
+- update readme on the features of the website
+- create demo
+- create summary for code and paper for fratures
+- import export mysql schema and upload cloud
+- fix console on browser

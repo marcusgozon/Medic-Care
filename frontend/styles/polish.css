@@ -1,0 +1,1886 @@
+body[data-page] {
+  color: #14284f;
+  background-color: #f5f8fe;
+}
+
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"], [data-page="admin"]) {
+  background:
+    radial-gradient(ellipse at 92% 4%, rgba(59, 130, 246, .28), transparent 31rem),
+    radial-gradient(ellipse at 8% 38%, rgba(96, 165, 250, .24), transparent 34rem),
+    radial-gradient(ellipse at 76% 88%, rgba(147, 197, 253, .3), transparent 32rem),
+    linear-gradient(128deg, #ffffff 0%, #eff6ff 34%, #dbeafe 72%, #eaf3ff 100%);
+  background-attachment: fixed;
+}
+
+body:is([data-page="login"], [data-page="signup"], [data-page="reset"], [data-page="booking"]) {
+  background:
+    radial-gradient(ellipse at 12% 8%, rgba(59, 130, 246, .26), transparent 34rem),
+    radial-gradient(ellipse at 92% 88%, rgba(96, 165, 250, .3), transparent 32rem),
+    radial-gradient(ellipse at 52% 48%, rgba(191, 219, 254, .42), transparent 38rem),
+    linear-gradient(128deg, #ffffff 0%, #eff6ff 36%, #dbeafe 74%, #eaf3ff 100%);
+  background-attachment: fixed;
+}
+
+body[data-page="home"] .site,
+body[data-page="appointments"] .page,
+body[data-page="history"] .page,
+body[data-page="settings"] .page,
+body[data-page="profile"] .app-container {
+  padding-top: clamp(14px, 2vw, 22px);
+}
+
+body[data-page="home"] .site {
+  padding-bottom: clamp(48px, 8vw, 88px);
+}
+
+body[data-page="home"] .services,
+body[data-page="home"] .about,
+body[data-page="home"] .contact {
+  margin-top: clamp(28px, 5vw, 56px);
+}
+
+body:is([data-page="appointments"], [data-page="history"], [data-page="settings"]) .page-head,
+body[data-page="settings"] .title-card {
+  margin-top: clamp(28px, 4vw, 42px);
+}
+
+body[data-page="appointments"] .grid {
+  gap: clamp(14px, 2vw, 22px);
+}
+
+body[data-page="appointments"] .card,
+body[data-page="history"] .table-card,
+body[data-page="profile"] .user-details-card,
+body[data-page="settings"] .panel,
+body[data-page="admin"] .card,
+body[data-page="admin"] .stat-card {
+  border: 1px solid #e0e9f6;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 12px 32px rgba(27, 57, 108, .075);
+}
+
+body[data-page="appointments"] .card,
+body[data-page="history"] .table-card,
+body[data-page="profile"] .user-details-card,
+body[data-page="settings"] .panel,
+body[data-page="admin"] .card,
+body[data-page="admin"] .stat-card {
+  border-radius: 22px;
+}
+
+body[data-page="appointments"] .card {
+  padding: clamp(18px, 2.4vw, 24px);
+}
+
+body[data-page="profile"] .app-container {
+  gap: 24px;
+}
+
+body[data-page="profile"] .user-details-card {
+  padding: clamp(22px, 4vw, 36px);
+}
+
+body[data-page="profile"] .card-top-bar {
+  margin-bottom: 28px;
+}
+
+body[data-page="history"] .table-card {
+  margin-top: 6px;
+}
+
+body[data-page="history"] .tabs {
+  margin-bottom: 20px;
+}
+
+body[data-page="settings"] .panel {
+  padding-right: clamp(20px, 4vw, 36px);
+  padding-left: clamp(20px, 4vw, 36px);
+}
+
+body[data-page="settings"] .block {
+  padding-top: 30px;
+  padding-bottom: 32px;
+}
+
+body[data-page="login"] .page {
+  background:
+    radial-gradient(ellipse at 12% 8%, rgba(59, 130, 246, .26), transparent 32rem),
+    radial-gradient(ellipse at 92% 92%, rgba(96, 165, 250, .3), transparent 30rem),
+    radial-gradient(ellipse at 50% 48%, rgba(191, 219, 254, .42), transparent 36rem),
+    linear-gradient(128deg, #ffffff 0%, #eff6ff 45%, #dbeafe 100%);
+}
+
+body[data-page="login"] .form {
+  max-width: 460px;
+  padding: clamp(28px, 5vw, 42px);
+  border: 1px solid rgba(205, 220, 244, .9);
+  border-radius: 24px;
+  background: rgba(255, 255, 255, .94);
+  box-shadow: 0 24px 64px rgba(27, 58, 110, .14);
+}
+
+body[data-page="login"] .sub {
+  margin-bottom: 26px;
+  line-height: 1.55;
+}
+
+body[data-page="login"] .field {
+  margin-bottom: 18px;
+}
+
+body:is([data-page="signup"], [data-page="reset"]) .signup-container {
+  padding: clamp(20px, 5vw, 48px) 18px;
+}
+
+body:is([data-page="signup"], [data-page="reset"]) .signup-form {
+  width: min(100%, 460px);
+  padding: clamp(24px, 5vw, 40px);
+  border: 1px solid #dce8f8;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, .96);
+  box-shadow: 0 24px 64px rgba(25, 56, 111, .14);
+}
+
+body:is([data-page="signup"], [data-page="reset"]) .signup-form h1 {
+  margin-bottom: 8px;
+  font-size: clamp(24px, 4vw, 30px);
+}
+
+body:is([data-page="signup"], [data-page="reset"]) .subtitle {
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+body:is([data-page="signup"], [data-page="reset"]) .form-group {
+  margin-bottom: 16px;
+}
+
+body[data-page="booking"] {
+  align-items: flex-start;
+  padding: clamp(18px, 4vw, 40px) max(16px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  background:
+    radial-gradient(ellipse at 12% 5%, rgba(59, 130, 246, .26), transparent 30rem),
+    radial-gradient(ellipse at 88% 95%, rgba(96, 165, 250, .3), transparent 30rem),
+    radial-gradient(ellipse at 55% 48%, rgba(191, 219, 254, .38), transparent 34rem),
+    linear-gradient(128deg, #ffffff 0%, #eff6ff 45%, #dbeafe 100%);
+}
+
+body[data-page="booking"] .booking-card {
+  margin: auto;
+  border-radius: 24px;
+  box-shadow: 0 24px 64px rgba(22, 53, 105, .16);
+}
+
+body[data-page="booking"] .card-header {
+  padding: 20px clamp(20px, 4vw, 32px) 24px;
+}
+
+body[data-page="booking"] .card-body {
+  padding-right: clamp(18px, 4vw, 30px);
+  padding-left: clamp(18px, 4vw, 30px);
+}
+
+body[data-page="admin"] .admin-layout {
+  padding: clamp(14px, 2.4vw, 24px) clamp(14px, 2.6vw, 28px) 72px;
+}
+
+body[data-page="admin"] .topbar {
+  margin-bottom: clamp(22px, 3vw, 32px);
+}
+
+body[data-page="admin"] .welcome-banner {
+  margin-bottom: 24px;
+  padding: clamp(24px, 4vw, 36px);
+}
+
+body[data-page="admin"] .stats-grid {
+  gap: clamp(12px, 2vw, 20px);
+  margin-bottom: 26px;
+}
+
+body[data-page="admin"] .stat-card {
+  padding: clamp(18px, 2.4vw, 24px);
+}
+
+body[data-page="admin"] .card {
+  padding: clamp(18px, 2.4vw, 26px) !important;
+}
+
+body[data-page="admin"] th,
+body[data-page="admin"] td {
+  padding: 14px 16px;
+}
+
+body[data-page] :is(button, input, select, textarea, a) {
+  transition-duration: .18s;
+}
+
+body[data-page] :is(input, select, textarea):focus-visible {
+  outline: 3px solid rgba(40, 102, 215, .22);
+  outline-offset: 1px;
+}
+
+@media (max-width: 640px) {
+  body[data-page="home"] .site,
+  body[data-page="appointments"] .page,
+  body[data-page="history"] .page,
+  body[data-page="settings"] .page,
+  body[data-page="profile"] .app-container {
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+
+  body:is([data-page="appointments"], [data-page="history"], [data-page="settings"]) .page-head,
+  body[data-page="settings"] .title-card {
+    margin: 26px 2px 18px;
+  }
+
+  body[data-page="appointments"] .page-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  body[data-page="appointments"] .page-head .btn-primary {
+    width: 100%;
+  }
+
+  body[data-page="profile"] .user-details-card {
+    padding: 22px 18px;
+  }
+
+  body[data-page="history"] .tabs {
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  body[data-page="settings"] .panel {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  body[data-page="settings"] .desc,
+  body[data-page="settings"] .ask,
+  body[data-page="settings"] .select-box,
+  body[data-page="settings"] .pw-form,
+  body[data-page="settings"] .btn-delete {
+    margin-left: 0;
+  }
+
+  body[data-page="login"] .page {
+    padding: 16px;
+  }
+
+  body[data-page="login"] .form {
+    padding: 26px 22px;
+  }
+
+  body:is([data-page="signup"], [data-page="reset"]) .signup-form {
+    padding: 24px 20px;
+  }
+
+  body[data-page="booking"] {
+    padding: 12px;
+  }
+
+  body[data-page="booking"] .booking-card {
+    border-radius: 20px;
+  }
+
+  body[data-page="admin"] .admin-layout {
+    padding: 12px 12px 48px;
+  }
+
+  body[data-page="admin"] th,
+  body[data-page="admin"] td {
+    padding: 11px 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body[data-page] :is(button, input, select, textarea, a) {
+    transition-duration: .01ms;
+  }
+}
+
+@media (min-width: 980px) {
+  html:not(.home-authenticated) body[data-page="home"] .hero .topbar {
+    position: relative;
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .home-guest-nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  html:not(.home-authenticated) body[data-page="home"] .home-auth-actions {
+    margin-left: auto;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]):not(.not-logged-in) .topbar {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    gap: clamp(12px, 2vw, 26px);
+    min-height: 68px;
+    height: auto;
+    padding: 8px 16px;
+    border: 1px solid rgba(202, 219, 244, .9);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, .86);
+    box-shadow: 0 14px 36px rgba(27, 57, 108, .12);
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]):not(.not-logged-in) .topbar > .brand {
+    grid-column: 1;
+    justify-self: start;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]):not(.not-logged-in) .topbar > .desktop-nav {
+    position: absolute;
+    left: 50%;
+    grid-column: auto;
+    justify-self: auto;
+    transform: translateX(-50%);
+    gap: 4px;
+    margin: 0;
+    padding: 5px;
+    border: 1px solid #e3ebf8;
+    border-radius: 999px;
+    background: #f3f7fd;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]):not(.not-logged-in) .desktop-nav a {
+    min-height: 40px;
+    padding: 9px clamp(9px, .9vw, 14px);
+    border-radius: 999px;
+    font-weight: 700;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]):not(.not-logged-in) .topbar > .notification-menu {
+    position: absolute;
+    right: 68px;
+    grid-column: auto;
+    justify-self: auto;
+    margin: 0;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]):not(.not-logged-in) .topbar > .profile-nav-avatar {
+    position: absolute;
+    right: 16px;
+    grid-column: auto;
+    justify-self: auto;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]):not(.not-logged-in) .desktop-nav a.logout {
+    flex: none;
+    margin: 0 0 0 4px;
+    padding: 9px clamp(10px, .9vw, 14px);
+    border: 0;
+    border-radius: 999px;
+    background: #fff0f1;
+    color: #a63c4a;
+    line-height: 1.2;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]):not(.not-logged-in) .desktop-nav a.logout:hover {
+    background: #ffe2e5;
+    color: #8e2635;
+    transform: translateY(-1px);
+  }
+
+  body[data-page="admin"] .admin-layout > .topbar > .desktop-nav a.logout {
+    flex: none;
+    margin: 0 0 0 4px;
+    padding: 9px 14px;
+    border: 0;
+    border-radius: 999px;
+    background: #fff0f1;
+    color: #a63c4a;
+    line-height: 1.2;
+  }
+
+  body[data-page="admin"] .admin-layout > .topbar > .desktop-nav a.logout:hover {
+    background: #ffe2e5;
+    color: #8e2635;
+    transform: translateY(-1px);
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .topbar > .desktop-nav {
+    flex-wrap: nowrap;
+  }
+
+  body[data-page="admin"] .admin-layout > .topbar > .desktop-nav {
+    flex-wrap: nowrap;
+  }
+
+  body[data-page="admin"] .admin-layout > .topbar {
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    min-height: 68px;
+    height: auto;
+    padding: 8px 16px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, .9);
+    box-shadow: 0 14px 36px rgba(27, 57, 108, .12);
+  }
+
+  body[data-page="admin"] .admin-layout > .topbar > div:first-child {
+    flex: 1 1 0;
+  }
+
+  body[data-page="admin"] .admin-layout > .topbar > .desktop-nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    justify-self: auto;
+    margin: 0;
+    padding: 5px;
+    border: 1px solid #e3ebf8;
+    border-radius: 999px;
+    background: #f3f7fd;
+    gap: 4px;
+  }
+
+  body[data-page="admin"] .admin-layout > .topbar > .desktop-nav a {
+    min-height: 40px;
+    padding: 9px 14px;
+    border-radius: 999px;
+  }
+
+  body:is([data-page="profile"], [data-page="settings"]):not(.not-logged-in) .topbar {
+    position: relative;
+    left: 50%;
+    width: min(calc(100vw - 28px), 1012px);
+    min-height: 68px;
+    height: 68px;
+    grid-template-columns: minmax(140px, 1fr) auto minmax(140px, 1fr);
+    column-gap: 12px;
+    row-gap: 0;
+    justify-content: space-between;
+    transform: translateX(-50%);
+  }
+
+  body:is([data-page="profile"], [data-page="settings"]):not(.not-logged-in) .topbar > .brand {
+    grid-column: 1;
+    grid-row: 1;
+    min-width: 0;
+  }
+
+  body:is([data-page="profile"], [data-page="settings"]):not(.not-logged-in) .topbar > .brand .brand-name {
+    white-space: nowrap;
+  }
+
+  body:is([data-page="profile"], [data-page="settings"]):not(.not-logged-in) .topbar > .notification-menu {
+    right: 68px;
+  }
+
+  body:is([data-page="profile"], [data-page="settings"]):not(.not-logged-in) .topbar > .profile-nav-avatar {
+    right: 16px;
+  }
+
+  body:is([data-page="profile"], [data-page="settings"]):not(.not-logged-in) .topbar > .desktop-nav {
+    left: 50%;
+    max-width: none;
+  }
+
+  body[data-page="admin"] .admin-layout > .topbar > .notification-menu {
+    position: absolute;
+    right: 68px;
+    margin: 0;
+  }
+
+  body[data-page="admin"] .admin-layout > .topbar > .profile-nav-avatar {
+    position: absolute;
+    right: 16px;
+    margin: 0;
+  }
+}
+
+@media (min-width: 980px) and (max-width: 1150px) {
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .desktop-nav a {
+    padding-right: 7px;
+    padding-left: 7px;
+    font-size: 11px;
+  }
+
+  body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .desktop-nav a.logout {
+    padding-right: 9px;
+    padding-left: 9px;
+  }
+
+  body[data-page="admin"] .admin-layout > .topbar > .desktop-nav a {
+    padding-right: 9px;
+    padding-left: 9px;
+    font-size: 12px;
+  }
+}
+
+html:not(.home-authenticated) body[data-page="home"] .hero .topbar {
+  min-height: 68px;
+  border: 1px solid rgba(255, 255, 255, .78);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .9);
+  box-shadow: 0 14px 36px rgba(3, 26, 61, .2);
+  backdrop-filter: blur(18px);
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-guest-nav {
+  align-self: center;
+  height: 48px;
+  padding: 4px 8px;
+  border: 1px solid #e3ebf8;
+  border-radius: 999px;
+  background: #f3f7fd;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-guest-nav a {
+  padding: 0 12px;
+  border-radius: 999px;
+  transition: color .18s ease, background .18s ease, transform .18s ease;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-guest-nav a:hover,
+html:not(.home-authenticated) body[data-page="home"] .home-guest-nav a.active {
+  background: #e4efff;
+  color: #1558bd;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-guest-nav a.active::after {
+  display: none;
+}
+
+html:not(.home-authenticated) body[data-page="home"] .home-auth-link {
+  min-height: 42px;
+  padding: 9px 18px;
+  border-width: 1px;
+  box-shadow: 0 5px 16px rgba(8, 103, 233, .12);
+}
+
+html[data-theme="dark"] body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]):not(.not-logged-in) .topbar,
+html[data-theme="dark"] body[data-page="admin"] .admin-layout > .topbar {
+  border-color: rgba(95, 129, 175, .38);
+  background: rgba(13, 27, 47, .84);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, .28);
+}
+
+html[data-theme="dark"] body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]):not(.not-logged-in) .desktop-nav,
+html[data-theme="dark"] body[data-page="admin"] .admin-layout > .topbar > .desktop-nav,
+html[data-theme="dark"]:not(.home-authenticated) body[data-page="home"] .home-guest-nav {
+  border-color: #324963;
+  background: rgba(9, 21, 37, .82);
+}
+
+html[data-theme="dark"] body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]):not(.not-logged-in) .desktop-nav a.logout,
+html[data-theme="dark"] body[data-page="admin"] .admin-layout > .topbar > .desktop-nav a.logout {
+  background: #482530;
+  color: #ffabb4;
+}
+
+html[data-theme="dark"] body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]):not(.not-logged-in) .desktop-nav a.logout:hover,
+html[data-theme="dark"] body[data-page="admin"] .admin-layout > .topbar > .desktop-nav a.logout:hover {
+  background: #62303e;
+  color: #ffd2d7;
+}
+
+html[data-theme="dark"]:not(.home-authenticated) body[data-page="home"] .hero .topbar {
+  border-color: rgba(255, 255, 255, .24);
+  background: rgba(11, 25, 45, .88);
+}
+
+html[data-theme="dark"]:not(.home-authenticated) body[data-page="home"] .home-guest-nav a {
+  color: #d3e2f6;
+}
+
+html[data-theme="dark"]:not(.home-authenticated) body[data-page="home"] .home-guest-nav a:hover,
+html[data-theme="dark"]:not(.home-authenticated) body[data-page="home"] .home-guest-nav a.active {
+  background: #1d3b63;
+  color: #a9ccff;
+}
+
+@media (max-width: 979px) {
+  html:not(.home-authenticated) body[data-page="home"] .hero .topbar {
+    border-radius: 18px;
+  }
+}
+
+.theme-toggle {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  bottom: max(18px, env(safe-area-inset-bottom));
+  z-index: 1000;
+  display: grid;
+  width: 50px;
+  height: 50px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 50%;
+  background: #174fae;
+  box-shadow: 0 8px 24px rgba(11, 42, 91, .3);
+  color: #fff;
+  cursor: pointer;
+  transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  background: #0e3e91;
+  box-shadow: 0 11px 28px rgba(11, 42, 91, .36);
+}
+
+.theme-toggle:focus-visible {
+  outline: 3px solid #78aaff;
+  outline-offset: 3px;
+}
+
+.theme-toggle svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
+
+html[data-theme="dark"] body[data-page] {
+  --ink: #e6eefb;
+  --ink-2: #c4d2e8;
+  --muted: #9aacc8;
+  --line: #2a3b56;
+  --line-strong: #3a4e6d;
+  --bg: #0b1424;
+  --surface: #142238;
+  color: #e6eefb;
+  background:
+    radial-gradient(ellipse at 88% 4%, rgba(68, 127, 245, .4), transparent 31rem),
+    radial-gradient(ellipse at 8% 34%, rgba(37, 99, 190, .34), transparent 35rem),
+    radial-gradient(ellipse at 82% 86%, rgba(34, 190, 197, .2), transparent 30rem),
+    radial-gradient(ellipse at 18% 88%, rgba(151, 92, 222, .2), transparent 33rem),
+    radial-gradient(ellipse at 49% 52%, rgba(30, 64, 112, .22), transparent 44rem),
+    linear-gradient(130deg, #0a1322 0%, #10213a 46%, #172f50 100%);
+  background-attachment: fixed;
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body[data-page="admin"] {
+  --ink: #e6eefb;
+  --ink-2: #c4d2e8;
+  --muted: #9aacc8;
+  --line: #2a3b56;
+  --line-strong: #3a4e6d;
+  --bg: #0b1424;
+  --surface: #142238;
+}
+
+html[data-theme="dark"] body[data-page="home"] .site,
+html[data-theme="dark"] body[data-page="appointments"] .page,
+html[data-theme="dark"] body[data-page="history"] .page,
+html[data-theme="dark"] body[data-page="settings"] .page,
+html[data-theme="dark"] body[data-page="profile"] .app-container,
+html[data-theme="dark"] body[data-page="login"] .page {
+  background: transparent;
+}
+
+html[data-theme="dark"] body[data-page="login"] .page {
+  background:
+    radial-gradient(ellipse at 12% 8%, rgba(68, 127, 245, .4), transparent 32rem),
+    radial-gradient(ellipse at 90% 88%, rgba(34, 190, 197, .2), transparent 29rem),
+    radial-gradient(ellipse at 10% 92%, rgba(151, 92, 222, .2), transparent 30rem),
+    radial-gradient(ellipse at 50% 48%, rgba(30, 64, 112, .24), transparent 36rem),
+    linear-gradient(130deg, #0a1322 0%, #10213a 50%, #172f50 100%);
+}
+
+html[data-theme="dark"] body[data-page="booking"] {
+  background:
+    radial-gradient(ellipse at 12% 5%, rgba(68, 127, 245, .4), transparent 30rem),
+    radial-gradient(ellipse at 88% 92%, rgba(34, 190, 197, .2), transparent 29rem),
+    radial-gradient(ellipse at 10% 94%, rgba(151, 92, 222, .2), transparent 30rem),
+    radial-gradient(ellipse at 52% 48%, rgba(30, 64, 112, .24), transparent 36rem),
+    linear-gradient(130deg, #0a1322 0%, #10213a 50%, #172f50 100%);
+}
+
+html[data-theme="dark"] body[data-page="admin"] {
+  background:
+    radial-gradient(ellipse at 50% -120px, rgba(68, 127, 245, .38), transparent 42rem),
+    radial-gradient(ellipse at 92% 78%, rgba(34, 190, 197, .18), transparent 36rem),
+    radial-gradient(ellipse at 5% 90%, rgba(151, 92, 222, .18), transparent 34rem),
+    linear-gradient(130deg, #0a1322 0%, #122642 100%);
+}
+
+html[data-theme="dark"] body[data-page] :is(.card, .panel, .form, .signup-form, .booking-card, .table-card, .title-card, .stat-card, .notification-tray, .modal-card, .user-details-card, .welcome-banner, .login-tabs) {
+  border-color: #2a3b56;
+  background-color: #142238;
+  background-image:
+    radial-gradient(ellipse at 100% 0%, rgba(59, 130, 246, .12), transparent 46%),
+    linear-gradient(145deg, rgba(61, 111, 178, .1), transparent 58%);
+  color: #e6eefb;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .24);
+}
+
+html[data-theme="dark"] body[data-page] :is(h1, h2, h3, h4, h5, p, label, th, td, .muted, .desc, .subtitle, .sub, .brand-name, .field label, .stat-info, .admin-code-prompt) {
+  color: #e6eefb;
+}
+
+html[data-theme="dark"] body[data-page] :is(small, .hint, .help-text, .doc-spec, .detail-label, .field-hint, .form-hint, .notification-empty, .empty, .empty-state, .muted-text) {
+  color: #a9bad3;
+}
+
+html[data-theme="dark"] body[data-page] a:not(.btn):not(.btn-primary):not(.btn-save):not(.home-auth-signup) {
+  color: #91bbff;
+}
+
+html[data-theme="dark"] body[data-page] a:not(.btn):not(.btn-primary):not(.btn-save):not(.home-auth-signup):hover {
+  color: #c1d9ff;
+}
+
+html[data-theme="dark"] body[data-page] :is(input, select, textarea, .input-box) {
+  border-color: #3a4e6d;
+  background-color: #0d192b;
+  color: #e6eefb;
+}
+
+html[data-theme="dark"] body[data-page] :is(.field, .input-wrapper, .input-group, .input-box, .side-search) {
+  border-color: #3a4e6d;
+  background-color: #0d192b;
+  color: #e6eefb;
+}
+
+html[data-theme="dark"] body[data-page] :is(input, select, textarea)::placeholder {
+  color: #91a3bf;
+}
+
+html[data-theme="dark"] body[data-page] :is(button, a) {
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body[data-page] :is(.topbar, header.topbar) {
+  border-color: #2a3b56;
+  background-color: rgba(17, 32, 53, .92);
+  color: #e6eefb;
+}
+
+html[data-theme="dark"] body[data-page] :is(.desktop-nav a, .home-guest-nav a, .no-match, .settings-nav a) {
+  color: #c6d5eb;
+}
+
+html[data-theme="dark"] body[data-page] :is(.desktop-nav a:hover, .desktop-nav a.active, .home-guest-nav a:hover, .home-guest-nav a.active, .settings-nav a:hover, .settings-nav a.active) {
+  background-color: #1c3455;
+  color: #9dc3ff;
+}
+
+html[data-theme="dark"] body[data-page] :is(table, th, td, hr, .block, .field, .form-group) {
+  border-color: #2a3b56;
+}
+
+html[data-theme="dark"] body[data-page] :is(.notification-item, .notification-empty, .notification-tray-header) {
+  border-color: #2a3b56;
+  background-color: #142238;
+  color: #dce8f8;
+}
+
+html[data-theme="dark"] body[data-page] :is(.notification-item:hover, .notification-item.unread, tbody tr:hover) {
+  background-color: #1b3150;
+  color: #eef5ff;
+}
+
+html[data-theme="dark"] body[data-page] :is(th, .table-head, .table-header) {
+  background-color: #1a2e49;
+  color: #dceaff;
+}
+
+html[data-theme="dark"] body[data-page] :is(.empty, .empty-state, .info, .info-item, .input-wrapper, .service-card, .option-box, .calendar-box, .date-picker, .settings-item) {
+  border-color: #2a3b56;
+  background-color: rgba(20, 34, 56, .88);
+  color: #dce8f8;
+}
+
+html[data-theme="dark"] body[data-page] :is(.service-card.selected, .option-box.selected, .day-cell.selected, .day-cell.active) {
+  border-color: #65a2ff;
+  background-color: #1c3e6a;
+  color: #f1f7ff;
+}
+
+html[data-theme="dark"] body[data-page="appointments"] .badge,
+html[data-theme="dark"] body[data-page="history"] .status,
+html[data-theme="dark"] body[data-page="admin"] .status-badge {
+  border: 1px solid currentColor;
+}
+
+html[data-theme="dark"] body[data-page="appointments"] :is(.badge.confirmed, .badge.pending, .badge.completed, .badge.cancelled),
+html[data-theme="dark"] body[data-page="history"] :is(.status.confirmed, .status.pending, .status.completed, .status.cancelled),
+html[data-theme="dark"] body[data-page="admin"] :is(.status-confirmed, .status-active, .status-pending, .status-completed, .status-cancelled, .status-banned) {
+  background-color: #1b3150;
+  color: #c6dcff;
+}
+
+html[data-theme="dark"] body[data-page] :is(.badge.confirmed, .status.confirmed, .status-confirmed, .status-active) {
+  border-color: #3c8064;
+  background-color: #173a32;
+  color: #9ce5c0;
+}
+
+html[data-theme="dark"] body[data-page] :is(.badge.pending, .status.pending, .status-pending) {
+  border-color: #8b6a2d;
+  background-color: #3a2f1d;
+  color: #f5d28a;
+}
+
+html[data-theme="dark"] body[data-page] :is(.badge.completed, .status.completed, .status-completed) {
+  border-color: #426ca5;
+  background-color: #1a3150;
+  color: #a9ccff;
+}
+
+html[data-theme="dark"] body[data-page] :is(.badge.cancelled, .status.cancelled, .status-cancelled, .status-banned) {
+  border-color: #8a4c59;
+  background-color: #3b2029;
+  color: #ffabb4;
+}
+
+html[data-theme="dark"] body[data-page] :is(.error, .err, .error-msg, .deny-booking-error, .admin-msg.error, .msg.error) {
+  color: #ff9a9f;
+}
+
+html[data-theme="dark"] body[data-page] :is(.success, .success-msg, .toast, .notification-toast) {
+  border-color: #33547a;
+  background-color: #162a45;
+  color: #dceaff;
+}
+
+html[data-theme="dark"] body[data-page] :is(.modal, .modal-overlay) {
+  background-color: rgba(3, 9, 18, .76);
+}
+
+html[data-theme="dark"] body[data-page] :is(.modal-card, .modal-content) {
+  border: 1px solid #344a68;
+  background-color: #142238;
+  color: #e6eefb;
+}
+
+html[data-theme="dark"] body[data-page="login"] .login-tabs {
+  background: #0d192b;
+}
+
+html[data-theme="dark"] body[data-page="login"] .login-tab {
+  color: #bac9df;
+}
+
+html[data-theme="dark"] body[data-page="login"] .login-tab.active {
+  background: #1c3455;
+  color: #dceaff;
+}
+
+html[data-theme="dark"] body[data-page="login"] .form,
+html[data-theme="dark"] body:is([data-page="signup"], [data-page="reset"]) .signup-form {
+  background: rgba(20, 34, 56, .96);
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero h1,
+html[data-theme="dark"] body[data-page="home"] .hero p,
+html[data-theme="dark"] body[data-page="home"] .hero .home-eyebrow {
+  color: #fff;
+}
+
+html[data-theme="dark"] body[data-page="admin"] .welcome-banner,
+html[data-theme="dark"] body[data-page="admin"] .notification-trigger,
+html[data-theme="dark"] body[data-page="admin"] .topbar #menuBtn {
+  border-color: #2a3b56;
+  background-color: #142238;
+  color: #dce8f8;
+}
+
+html[data-theme="dark"] body[data-page="admin"] .sidebar {
+  background: linear-gradient(180deg, #091a36 0%, #0c2b59 58%, #123a70 100%);
+}
+
+html[data-theme="dark"] body[data-page="admin"] .welcome-banner {
+  background:
+    radial-gradient(ellipse at 92% 10%, rgba(75, 143, 239, .3), transparent 20rem),
+    radial-gradient(ellipse at 8% 100%, rgba(34, 190, 197, .16), transparent 18rem),
+    linear-gradient(120deg, #142b4b 0%, #172a43 78%);
+}
+
+html[data-theme="dark"] body[data-page="admin"] :is(.stat-icon.blue, .stat-icon.green, .stat-icon.yellow, .stat-icon.purple) {
+  border: 1px solid rgba(164, 196, 240, .18);
+  background-color: #203a5b;
+  color: #b9d5ff;
+}
+
+html[data-theme="dark"] body[data-page="admin"] .notification-item {
+  color: #dce8f8;
+}
+
+html[data-theme="dark"] body[data-page] :is(.theme-toggle, .btn, .btn-primary, .btn-save, .home-auth-signup) {
+  color: #fff;
+}
+
+html[data-theme="dark"] body[data-page] :is(button:not(.btn):not(.btn-primary):not(.btn-save):not(.btn-danger):not(.btn-warning):not(.btn-success):not(.btn-secondary):not(.home-auth-signup):not(.theme-toggle):not(.notification-trigger), .icon-btn, .notification-close) {
+  border-color: #3a4e6d;
+  background-color: #1a2e49;
+  color: #dce8f8;
+}
+
+html[data-theme="dark"] body[data-page] :is(button:not(.btn):not(.btn-primary):not(.btn-save):not(.btn-danger):not(.btn-warning):not(.btn-success):not(.btn-secondary):not(.home-auth-signup):not(.theme-toggle):not(.notification-trigger):hover, .icon-btn:hover, .notification-close:hover) {
+  background-color: #24436a;
+  color: #fff;
+}
+
+html[data-theme="dark"] body[data-page] :is(input:focus, select:focus, textarea:focus, button:focus-visible, a:focus-visible) {
+  outline-color: #79adff;
+  box-shadow: 0 0 0 3px rgba(91, 156, 255, .26);
+}
+
+html[data-theme="dark"] body[data-page] .theme-toggle {
+  border-color: rgba(255, 209, 102, .42);
+  background: linear-gradient(145deg, #244a79, #172f50);
+}
+
+html[data-theme="dark"] body[data-page] .theme-toggle svg {
+  color: #ffd166;
+}
+
+html[data-theme="dark"] body[data-page] .notification-trigger svg,
+html[data-theme="dark"] body[data-page] .icon-btn:not(.light) svg {
+  color: #65d6d0;
+}
+
+html[data-theme="dark"] body[data-page="admin"] .stat-icon.blue {
+  background: #193b68;
+  color: #79b4ff;
+}
+
+html[data-theme="dark"] body[data-page="admin"] .stat-icon.green {
+  background: #173a32;
+  color: #68dda4;
+}
+
+html[data-theme="dark"] body[data-page="admin"] .stat-icon.yellow {
+  background: #40331b;
+  color: #ffd166;
+}
+
+html[data-theme="dark"] body[data-page="admin"] .stat-icon.purple {
+  background: #34264f;
+  color: #c5a2ff;
+}
+
+html[data-theme="dark"] body[data-page="admin"] .sidebar nav a:not(.active) svg {
+  color: #80b8ff;
+}
+
+html[data-theme="dark"] body[data-page="admin"] .sidebar nav a:nth-child(2):not(.active) svg {
+  color: #75dfc0;
+}
+
+html[data-theme="dark"] body[data-page="admin"] .sidebar nav a:nth-child(3):not(.active) svg {
+  color: #c5a2ff;
+}
+
+html[data-theme="dark"] body[data-page="admin"] .sidebar nav a:nth-child(4):not(.active) svg {
+  color: #ffd166;
+}
+
+html[data-theme="dark"] body[data-page="settings"] #langTitle .sec-icon {
+  stroke: #65c9ff;
+}
+
+html[data-theme="dark"] body[data-page="settings"] #pwTitle .sec-icon {
+  stroke: #ffd166;
+}
+
+html[data-theme="dark"] body[data-page="settings"] #delTitle .sec-icon {
+  stroke: #ff8293;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar li:nth-child(4n + 1) .svc-ico {
+  background: #193b68;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar li:nth-child(4n + 1) .svc-ico svg {
+  stroke: #79b4ff;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar li:nth-child(4n + 2) .svc-ico {
+  background: #173a32;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar li:nth-child(4n + 2) .svc-ico svg {
+  stroke: #68dda4;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar li:nth-child(4n + 3) .svc-ico {
+  background: #34264f;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar li:nth-child(4n + 3) .svc-ico svg {
+  stroke: #c5a2ff;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar li:nth-child(4n) .svc-ico {
+  background: #40331b;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar li:nth-child(4n) .svc-ico svg {
+  stroke: #ffd166;
+}
+
+html[data-theme="dark"] body[data-page="booking"] .services-grid .service-card:nth-child(4n + 1) .service-badge {
+  background: #193b68;
+  color: #9cc9ff;
+}
+
+html[data-theme="dark"] body[data-page="booking"] .services-grid .service-card:nth-child(4n + 2) .service-badge {
+  background: #173a32;
+  color: #8ce7b9;
+}
+
+html[data-theme="dark"] body[data-page="booking"] .services-grid .service-card:nth-child(4n + 3) .service-badge {
+  background: #34264f;
+  color: #d0b6ff;
+}
+
+html[data-theme="dark"] body[data-page="booking"] .services-grid .service-card:nth-child(4n) .service-badge {
+  background: #40331b;
+  color: #ffdc8a;
+}
+
+html[data-theme="dark"] body[data-page] :is(
+  h1, h2, h3, h4, h5, h6,
+  p, label, legend, th, td, caption,
+  .card-title, .section-title, .page-title, .title,
+  .subtitle, .sub, .desc, .muted, .muted-text, .hint, .help-text,
+  .field-hint, .form-hint, .detail-label, .detail-value,
+  .doc-name, .doc-spec, .service-title, .review-title, .review-row,
+  .row-item, .r-date, .r-type, .r-doctor, .r-status,
+  .group-label, .stat-info h2, .stat-info h4,
+  .notification-tray-header strong, .notification-item,
+  .empty, .empty-state, .notification-empty, .no-match,
+  .time-label, .calendar-header, .calendar-days-header
+) {
+  color: #e1ebf9 !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(input, select, textarea, option, .form-control, .input-box input, .input-wrapper input, .input-wrapper select) {
+  border-color: #435a79;
+  background-color: #0c192b;
+  color: #f0f5fc;
+  caret-color: #8dbaff;
+}
+
+html[data-theme="dark"] body[data-page] :is(input, select, textarea, .form-control, .input-box input, .input-wrapper input, .input-wrapper select)::placeholder {
+  color: #a7b8d0;
+  opacity: 1;
+}
+
+html[data-theme="dark"] body[data-page] :is(input:disabled, select:disabled, textarea:disabled, button:disabled) {
+  border-color: #34445c;
+  background-color: #202e42;
+  color: #a2b0c5;
+  opacity: 1;
+}
+
+html[data-theme="dark"] body[data-page] :is(.field, .form-group, .input-group, .input-wrapper, .input-box, .row, .review-row, .detail-row) {
+  border-color: #30445f;
+}
+
+html[data-theme="dark"] body[data-page] :is(.info > div, .review-row, .row-item, .detail-row, .field-row, .data-row) {
+  background-color: rgba(15, 30, 50, .72);
+  color: #e1ebf9;
+}
+
+html[data-theme="dark"] body[data-page] :is(.card, .panel, .table-card, .user-details-card, .modal-card, .modal-content, .booking-card) :is(ul, ol, li, span, div) {
+  border-color: #30445f;
+}
+
+html[data-theme="dark"] body[data-page] :is(.modal-card, .modal-content) :is(h1, h2, h3, p, label, span, strong) {
+  color: #e1ebf9;
+}
+
+html[data-theme="dark"] body[data-page] :is(.modal-card, .modal-content) :is(.muted, .desc, .hint, small, .detail-label) {
+  color: #afc0d8 !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(.error, .err, .error-msg, .deny-booking-error, .admin-msg.error, .msg.error, [role="alert"].error) {
+  color: #ff9a9f !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(.success, .success-desc, .success-msg, .form-msg.success) {
+  color: #8fe1b4 !important;
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero :is(h1, h2, h3, p, a, .home-eyebrow, .lead) {
+  color: #fff;
+}
+
+html[data-theme="dark"] body[data-page] :is(.badge.confirmed, .status.confirmed, .status-confirmed, .status-active) {
+  color: #9ce5c0 !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(.badge.pending, .status.pending, .status-pending) {
+  color: #f5d28a !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(.badge.completed, .status.completed, .status-completed) {
+  color: #a9ccff !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(.badge.cancelled, .status.cancelled, .status-cancelled, .status-banned) {
+  color: #ffabb4 !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(.btn, .btn-primary, .btn-save, .btn-danger, .btn-warning, .btn-success, .btn-secondary, .home-auth-signup, .book, .theme-toggle) {
+  color: #fff !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(.desktop-nav a, .home-guest-nav a, .sidebar a, .settings-nav a, .logout, a.link-btn, .forgot, .admin-resend) {
+  color: #aacbff;
+}
+
+html[data-theme="dark"] body[data-page] :is(.desktop-nav a:hover, .home-guest-nav a:hover, .sidebar a:hover, .settings-nav a:hover, a.link-btn:hover, .forgot:hover, .admin-resend:hover) {
+  color: #d3e4ff;
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero .home-title-accent {
+  color: #8fc8ff;
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero {
+  background-color: #102748;
+  box-shadow: 0 28px 75px rgba(0, 0, 0, .38);
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero::before {
+  background:
+    radial-gradient(ellipse at 82% 18%, rgba(32, 132, 213, .22), transparent 34rem),
+    linear-gradient(95deg, rgba(5, 19, 39, .96) 0%, rgba(8, 29, 57, .88) 42%, rgba(11, 42, 78, .54) 72%, rgba(8, 28, 54, .38) 100%);
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero-stats {
+  border-color: rgba(136, 172, 216, .34);
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(48, 113, 187, .2), transparent 55%),
+    rgba(13, 29, 50, .94);
+  box-shadow: 0 16px 42px rgba(0, 0, 0, .32);
+  color: #edf4ff;
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero-stats :is(.rating, .rating strong, .hours, .hours b, .experts) {
+  color: #edf4ff !important;
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero-stats .stars {
+  color: #ffd166 !important;
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero-stats .hours svg {
+  stroke: #72c4ff;
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero-stats .experts svg :is(circle, path) {
+  fill: #72c4ff;
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero-stats .experts svg path:last-child {
+  fill: #142a46;
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero-stats .vline {
+  background: #456487;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar a {
+  border-color: #2e4564;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(58, 112, 181, .2), transparent 60%),
+    #13243a;
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .24);
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar a:hover {
+  border-color: #5b86bd;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(76, 144, 226, .28), transparent 60%),
+    #192d47;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, .34);
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-name {
+  color: #e8f1ff !important;
+}
+
+html[data-theme="dark"] body[data-page="home"] .about {
+  color: #dce8f8;
+}
+
+html[data-theme="dark"] body[data-page="home"] .about p {
+  color: #c3d2e7;
+}
+
+html[data-theme="dark"] body[data-page] {
+  color: #e6eefb !important;
+}
+
+html[data-theme="dark"] body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"], [data-page="login"], [data-page="signup"], [data-page="reset"], [data-page="booking"], [data-page="admin"]) {
+  background-color: #0a1322 !important;
+}
+
+html[data-theme="dark"] body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"], [data-page="login"], [data-page="signup"], [data-page="reset"], [data-page="booking"], [data-page="admin"]) :is(.page, .site, main:not(.booking-card), .app-container) {
+  background-color: transparent !important;
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero-stats {
+  border-color: #385373 !important;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(52, 126, 207, .25), transparent 58%),
+    #101f34 !important;
+  color: #f0f5fc !important;
+}
+
+html[data-theme="dark"] body[data-page="home"] .hero-stats :is(.rating, .rating strong, .hours, .hours span, .hours b, .experts, .experts span) {
+  color: #f0f5fc !important;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar,
+html[data-theme="dark"] body[data-page="home"] .svc-bar li {
+  background: transparent !important;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar li > a {
+  border-color: #344c6c !important;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(59, 130, 246, .2), transparent 60%),
+    #122238 !important;
+  color: #edf4ff !important;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar li > a .svc-name {
+  color: #edf4ff !important;
+}
+
+html[data-theme="dark"] body[data-page="home"] :is(.about, .contact, .info) {
+  color: #e6eefb !important;
+}
+
+html[data-theme="dark"] body[data-page="home"] .about p {
+  color: #c8d6e9 !important;
+}
+
+html[data-theme="dark"] body[data-page="appointments"] .info > div {
+  background: #101f34 !important;
+  color: #e8f1ff !important;
+}
+
+html[data-theme="dark"] body[data-page="appointments"] .empty {
+  border-color: #405777 !important;
+  background: #132238 !important;
+  color: #c8d6e9 !important;
+}
+
+html[data-theme="dark"] body[data-page="history"] :is(.tabs, .tab) {
+  border-color: #354b68 !important;
+  background-color: #132238 !important;
+  color: #d3e2f6 !important;
+}
+
+html[data-theme="dark"] body[data-page="history"] .tab.active {
+  background: #1d3b63 !important;
+  color: #b7d4ff !important;
+}
+
+html[data-theme="dark"] body[data-page="history"] :is(.row-item, .table-card, .empty-state) {
+  border-color: #344b69 !important;
+  background-color: #122238 !important;
+  color: #e1ebf9 !important;
+}
+
+html[data-theme="dark"] body[data-page="profile"] :is(.user-details-card, .input-wrapper, .input-group, .success-container) {
+  border-color: #354b68 !important;
+  background-color: #122238 !important;
+  color: #e6eefb !important;
+}
+
+html[data-theme="dark"] body[data-page="settings"] :is(.title-card, .panel, .block, .select-box, .pw-form) {
+  border-color: #354b68 !important;
+  background-color: #122238 !important;
+  color: #e6eefb !important;
+}
+
+html[data-theme="dark"] body[data-page="booking"] :is(.booking-card, .card-header, .card-body, .calendar-box, .service-card, .option-box, .time-btn, .review-row, .success-container) {
+  border-color: #354b68 !important;
+  background-color: #122238 !important;
+  color: #e6eefb !important;
+}
+
+html[data-theme="dark"] body[data-page="booking"] :is(.service-title, .section-label, .form-group label, .opt-text, .calendar-header, .day-cell, .time-btn, .review-title, .review-row, .success-title, .success-desc) {
+  color: #e1ebf9 !important;
+}
+
+html[data-theme="dark"] body[data-page="booking"] .time-btn.selected,
+html[data-theme="dark"] body[data-page="booking"] .day-cell.selected {
+  border-color: #70aaff !important;
+  background: #214574 !important;
+  color: #fff !important;
+}
+
+html[data-theme="dark"] body[data-page="booking"] :is(.time-btn.taken, .time-btn:disabled) {
+  border-color: #3a4b62 !important;
+  background: #202e42 !important;
+  color: #a4b3c9 !important;
+}
+
+html[data-theme="dark"] body[data-page="admin"] :is(.card, .stat-card, .welcome-banner, .modal-content, .notification-tray) {
+  border-color: #354b68 !important;
+  background-color: #122238 !important;
+  color: #e6eefb !important;
+}
+
+html[data-theme="dark"] body[data-page="admin"] :is(.card h2, .card h3, .card h4, .welcome-banner h2, .stat-info h2, .stat-info h4, .detail-value, .modal-content h2, .modal-content label) {
+  color: #e6eefb !important;
+}
+
+html[data-theme="dark"] body[data-page="admin"] table th {
+  background: #1a304d !important;
+  color: #e1ebf9 !important;
+}
+
+html[data-theme="dark"] body[data-page="admin"] table td,
+html[data-theme="dark"] body[data-page="admin"] .notification-item {
+  color: #d4e0f0 !important;
+}
+
+html[data-theme="dark"] body[data-page="admin"] table tbody tr:hover,
+html[data-theme="dark"] body[data-page="admin"] .notification-item:hover,
+html[data-theme="dark"] body[data-page="admin"] .notification-item.unread {
+  background: #1b3453 !important;
+  color: #f0f5fc !important;
+}
+
+html[data-theme="dark"] body[data-page] .notification-trigger {
+  border: 1px solid #456183 !important;
+  background: linear-gradient(145deg, #1a3454, #122238) !important;
+  color: #7ee0d6 !important;
+  box-shadow: 0 5px 16px rgba(0, 0, 0, .22);
+}
+
+html[data-theme="dark"] body[data-page] .notification-trigger:hover,
+html[data-theme="dark"] body[data-page] .notification-trigger[aria-expanded="true"] {
+  border-color: #69b8c5 !important;
+  background: linear-gradient(145deg, #22486c, #183551) !important;
+  color: #a1fff1 !important;
+}
+
+html[data-theme="dark"] body[data-page] .notification-trigger svg,
+html[data-theme="dark"] body[data-page] .notification-trigger svg path,
+html[data-theme="dark"] body[data-page] .notification-trigger svg circle {
+  color: #7ee0d6 !important;
+  fill: none !important;
+  stroke: #7ee0d6 !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] body[data-page] .notification-count {
+  border-color: #122238 !important;
+  background: #f05e71 !important;
+  color: #fff !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(.notification-tray, .notification-tray-header, .notification-list) {
+  border-color: #354b68 !important;
+  background: #101f34 !important;
+  color: #e6eefb !important;
+}
+
+html[data-theme="dark"] body[data-page] .notification-tray-header {
+  border-bottom: 1px solid #354b68 !important;
+}
+
+html[data-theme="dark"] body[data-page] .notification-tray-header strong,
+html[data-theme="dark"] body[data-page] .notification-item {
+  color: #e6eefb !important;
+}
+
+html[data-theme="dark"] body[data-page] .notification-empty {
+  color: #b6c6dc !important;
+}
+
+html[data-theme="dark"] body[data-page] .notification-toast {
+  border-color: #456183 !important;
+  background: #142944 !important;
+  color: #f0f5fc !important;
+}
+
+html[data-theme="dark"] body[data-page="login"] :is(.card, .toast, .login-tabs, .form) {
+  border-color: #354b68 !important;
+  background-color: #122238 !important;
+  color: #e6eefb !important;
+}
+
+html[data-theme="dark"] body[data-page="login"] .login-tab.active {
+  background: #1d3b63 !important;
+  color: #e6f0ff !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(.input-group, .form-group, .field, .pw-form, .input-group label) {
+  background: transparent !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(input:not([type="hidden"]), select, textarea, .form-control, .input-wrapper, .input-box, .select-box) {
+  border-color: #3b526e !important;
+  background: #142238 !important;
+  color: #e8f0fb !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .18);
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body[data-page] :is(.input-wrapper, .input-box, .select-box) {
+  border-radius: 13px;
+}
+
+html[data-theme="dark"] body[data-page] :is(.input-wrapper input, .input-box input, .select-box select) {
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: #f0f5fc !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(input:not([type="hidden"]), select, textarea, .form-control)::placeholder {
+  color: #a9bad0 !important;
+  opacity: 1;
+}
+
+html[data-theme="dark"] body[data-page] :is(input:not([type="hidden"]), select, textarea, .form-control):hover {
+  border-color: #526b8b !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(input:not([type="hidden"]), select, textarea, .form-control):focus,
+html[data-theme="dark"] body[data-page] :is(.input-wrapper, .input-box, .select-box):focus-within {
+  border-color: #69a8ff !important;
+  background: #172a43 !important;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(76, 144, 226, .22);
+}
+
+html[data-theme="dark"] body[data-page] :is(.input-wrapper, .input-box):focus-within :is(input, select) {
+  border-color: transparent !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(input:not([type="hidden"]), select, textarea, .form-control):disabled,
+html[data-theme="dark"] body[data-page] :is(input:not([type="hidden"]), select, textarea, .form-control)[readonly] {
+  border-color: #34465e !important;
+  background: #1a2a3e !important;
+  color: #aebbd0 !important;
+  opacity: 1;
+  box-shadow: none;
+}
+
+html[data-theme="dark"] body[data-page] select option {
+  background: #142238;
+  color: #e8f0fb;
+}
+
+html[data-theme="dark"] body[data-page] input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(.82) sepia(.18) saturate(1.2);
+  opacity: .9;
+}
+
+html[data-theme="dark"] body[data-page] input:-webkit-autofill,
+html[data-theme="dark"] body[data-page] input:-webkit-autofill:hover,
+html[data-theme="dark"] body[data-page] input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #f0f5fc !important;
+  box-shadow: 0 0 0 1000px #142238 inset !important;
+  transition: background-color 99999s ease-out;
+}
+
+html[data-theme="dark"] body[data-page="profile"] .input-group {
+  background: transparent !important;
+}
+
+html[data-theme="dark"] body[data-page="profile"] .input-wrapper {
+  border: 1px solid #3b526e !important;
+  background: #142238 !important;
+}
+
+html[data-theme="dark"] body[data-page="profile"] .input-wrapper:focus-within {
+  border-color: #69a8ff !important;
+  background: #172a43 !important;
+}
+
+html[data-theme="dark"] body[data-page="settings"] .input-box {
+  border: 1px solid #3b526e !important;
+  background: #142238 !important;
+}
+
+html[data-theme="dark"] body[data-page="settings"] .select-box {
+  border-color: #3b526e !important;
+  background: #142238 !important;
+}
+
+html[data-theme="dark"] body[data-page="booking"] .form-control,
+html[data-theme="dark"] body[data-page="booking"] input[type="date"].form-control {
+  border-color: #3b526e !important;
+  background: #142238 !important;
+  color: #e8f0fb !important;
+}
+
+html[data-theme="dark"] body[data-page="booking"] .form-control:focus {
+  border-color: #69a8ff !important;
+  background: #172a43 !important;
+}
+
+html[data-theme="dark"] body[data-page="admin"] :is(input, select, textarea) {
+  border-color: #3b526e !important;
+  background: #142238 !important;
+  color: #e8f0fb !important;
+}
+
+html[data-theme="dark"] body[data-page="admin"] :is(input, select, textarea):focus {
+  border-color: #69a8ff !important;
+  background: #172a43 !important;
+}
+
+html[data-theme="dark"] body[data-page] :is(.input-wrapper.invalid, .input-box.invalid, input.error, .form-control.error) {
+  border-color: #b85b6b !important;
+  background: #321f2b !important;
+}
+
+html[data-theme="dark"] body[data-page] .topbar #menuBtn {
+  border-color: #36516f !important;
+  background-color: #122238 !important;
+  color: #7ee0d6 !important;
+}
+
+html[data-theme="dark"] body[data-page] .topbar #menuBtn:hover {
+  border-color: #52749b !important;
+  background-color: #1a3454 !important;
+  color: #a1fff1 !important;
+}
+
+body[data-page] .profile-nav-avatar {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  place-items: center;
+  overflow: hidden;
+  border: 2px solid #d5e4fa;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3172d8, #23aaa4);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  box-shadow: 0 3px 10px rgba(20, 50, 100, .18);
+}
+
+body[data-page] .profile-nav-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body[data-page] .profile-nav-avatar:focus-visible {
+  outline: 3px solid #73aaff;
+  outline-offset: 3px;
+}
+
+body[data-page="admin"] .admin-layout > .topbar > .profile-nav-avatar {
+  margin-left: 8px;
+}
+
+body[data-page="booking"] .card-header {
+  position: relative;
+}
+
+body[data-page="booking"] .card-header > .profile-nav-avatar {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+}
+
+.appt-patient-avatar {
+  display: grid;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  place-items: center;
+  overflow: hidden;
+  border: 3px solid #d7e5fa;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3172d8, #23aaa4);
+  color: #fff;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.appt-patient-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+html[data-theme="dark"] body[data-page] .profile-nav-avatar,
+html[data-theme="dark"] body[data-page] .appt-patient-avatar {
+  border-color: #3a5a7e;
+  color: #fff;
+}
+
+body[data-page="profile"] .profile-photo-control {
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+}
+
+body[data-page="profile"] .photo-change-btn {
+  border: 1px solid #c8d9f3;
+  border-radius: 999px;
+  padding: 6px 12px;
+  background: #f0f6ff;
+  color: #2457a5;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+body[data-page="profile"] .photo-message {
+  min-height: 16px;
+  margin: 0;
+  color: #536782;
+  font-size: 11px;
+  text-align: center;
+}
+
+html[data-theme="dark"] body[data-page="profile"] .photo-change-btn {
+  border-color: #456183 !important;
+  background: #1a3454 !important;
+  color: #b7d4ff !important;
+}
+
+html[data-theme="dark"] body[data-page="profile"] .photo-message {
+  color: #b5c6dc !important;
+}
+
+@media (max-width: 480px) {
+  body[data-page="profile"] .card-top-bar {
+    align-items: flex-start;
+  }
+}
+
+body[data-page="home"] .services,
+body[data-page="home"] .info {
+  width: min(calc(100% - 40px), 1180px);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+body[data-page="home"] .services {
+  padding: clamp(44px, 6vw, 72px) 0 0;
+}
+
+body[data-page="home"] .services h2,
+body[data-page="home"] .about h2,
+body[data-page="home"] .contact h2 {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+body[data-page="home"] .services h2 {
+  position: relative;
+  margin-bottom: 30px;
+  color: #173666;
+  font-size: clamp(24px, 3vw, 32px);
+}
+
+body[data-page="home"] .services h2::after {
+  display: block;
+  width: 54px;
+  height: 4px;
+  margin: 12px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #2874df, #28b7b0);
+  content: "";
+}
+
+body[data-page="home"] .svc-bar {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+body[data-page="home"] .svc-bar li {
+  min-width: 0;
+}
+
+body[data-page="home"] .svc-bar a {
+  min-height: 178px;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px 18px;
+  border: 1px solid #e1e9f5;
+  border-radius: 20px;
+  background: linear-gradient(155deg, #fff 10%, #f6f9ff 100%);
+  box-shadow: 0 8px 24px rgba(27, 57, 108, .08);
+  text-align: center;
+}
+
+body[data-page="home"] .svc-bar a:hover {
+  border-color: #b6cef1;
+  box-shadow: 0 14px 32px rgba(27, 77, 146, .14);
+}
+
+body[data-page="home"] .svc-ico {
+  width: 58px;
+  height: 58px;
+  border: 1px solid rgba(68, 115, 190, .12);
+  border-radius: 18px;
+  background: #eaf2ff;
+}
+
+body[data-page="home"] .svc-ico svg {
+  width: 29px;
+  height: 29px;
+  stroke: #2866c3;
+}
+
+body[data-page="home"] .svc-name {
+  margin-top: 0;
+  color: #21395f;
+  font-size: 14px;
+  font-weight: 750;
+  letter-spacing: .025em;
+  line-height: 1.45;
+  text-transform: uppercase;
+}
+
+body[data-page="home"] .info {
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, .75fr);
+  gap: 22px;
+  align-items: stretch;
+  padding: clamp(42px, 6vw, 70px) 0;
+}
+
+body[data-page="home"] .about,
+body[data-page="home"] .contact {
+  min-width: 0;
+  padding: clamp(24px, 3vw, 36px);
+  border: 1px solid #e1e9f5;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, .92);
+  box-shadow: 0 10px 30px rgba(27, 57, 108, .08);
+}
+
+body[data-page="home"] .about h2,
+body[data-page="home"] .contact h2 {
+  margin-bottom: 20px;
+  font-size: 21px;
+}
+
+body[data-page="home"] .about p {
+  max-width: 68ch;
+  margin-right: auto;
+  margin-left: auto;
+  color: #536782;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+body[data-page="home"] .contact {
+  border-color: #17488f;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(73, 147, 238, .28), transparent 58%),
+    linear-gradient(145deg, #12366d, #174a89);
+  box-shadow: 0 16px 36px rgba(15, 54, 112, .2);
+}
+
+body[data-page="home"] .contact h2 {
+  color: #fff;
+}
+
+body[data-page="home"] .contact li {
+  align-items: flex-start;
+}
+
+html[data-theme="dark"] body[data-page="home"] .services h2 {
+  color: #e6eefb;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-bar a {
+  border-color: #344c6c;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(59, 130, 246, .2), transparent 60%),
+    #122238;
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-ico {
+  border-color: rgba(131, 171, 226, .22);
+}
+
+html[data-theme="dark"] body[data-page="home"] .svc-name {
+  color: #edf4ff !important;
+}
+
+html[data-theme="dark"] body[data-page="home"] .about {
+  border-color: #344b69;
+  background: #122238;
+}
+
+html[data-theme="dark"] body[data-page="home"] .about h2 {
+  color: #e6eefb;
+}
+
+html[data-theme="dark"] body[data-page="home"] .about p {
+  color: #c8d6e9 !important;
+}
+
+html[data-theme="dark"] body[data-page="home"] .contact {
+  border-color: #315581;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(73, 147, 238, .25), transparent 58%),
+    linear-gradient(145deg, #0d2340, #123a68);
+}
+
+@media (max-width: 900px) {
+  body[data-page="home"] .svc-bar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  body[data-page="home"] .info {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  body[data-page="home"] .services,
+  body[data-page="home"] .info {
+    width: min(calc(100% - 28px), 1180px);
+  }
+
+  body[data-page="home"] .svc-bar {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  body[data-page="home"] .svc-bar a {
+    min-height: 112px;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 18px;
+    text-align: left;
+  }
+
+  body[data-page="home"] .svc-name {
+    text-align: left;
+  }
+
+  body[data-page="home"] .about,
+  body[data-page="home"] .contact {
+    padding: 23px 20px;
+  }
+}

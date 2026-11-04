@@ -6,7 +6,11 @@
   <title data-i18n="set.doctitle">Settings | MEDIC CARE</title>
   <link rel="icon" type="image/png" href="../assets/medic-care-favicon.png">
   <script src="../script/auth.js"></script>
+  <script src="../script/theme.js"></script>
   <link rel="stylesheet" href="../styles/medic-care.css">
+  <link rel="stylesheet" href="../styles/polish.css">
+  <script src="../script/notifications.js" defer></script>
+  <script src="../script/profile-avatar.js" defer></script>
 </head>
 <body data-page="settings">
 
@@ -47,6 +51,14 @@
         <span class="brand-name">MEDIC CARE</span>
         <img class="brand-logo" src="../assets/medic-care-logo.png" alt="Medic Care">
       </div>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="../index.html" data-i18n="nav.dashboard">Dashboard</a>
+        <a href="profile.html" data-i18n="nav.profile">Profile</a>
+        <a href="appointment.html" data-i18n="nav.appointment">Appointment</a>
+        <a href="medical_history.html" data-i18n="nav.history">Medical History</a>
+        <a class="active" href="settings.html" aria-current="page" data-i18n="nav.settings">Settings</a>
+        <a class="logout" href="login.html" data-i18n="nav.logout">Logout</a>
+      </nav>
     </header>
 
     <!-- Settings card -->

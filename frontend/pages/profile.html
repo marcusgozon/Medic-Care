@@ -7,7 +7,11 @@
   <link rel="icon" type="image/png" href="../assets/medic-care-favicon.png">
   <script src="../script/auth.js"></script>
   <script src="../script/languages.js"></script>
+  <script src="../script/theme.js"></script>
   <link rel="stylesheet" href="../styles/medic-care.css">
+  <link rel="stylesheet" href="../styles/polish.css">
+  <script src="../script/notifications.js" defer></script>
+  <script src="../script/profile-avatar.js" defer></script>
 </head>
 <body data-page="profile">
 
@@ -47,6 +51,14 @@
         <span class="brand-name">MEDIC CARE</span>
         <img class="brand-logo" src="../assets/medic-care-logo.png" alt="Medic Care">
       </div>
+      <nav class="desktop-nav" aria-label="Main navigation">
+        <a href="../index.html" data-i18n="nav.dashboard">Dashboard</a>
+        <a class="active" href="profile.html" aria-current="page" data-i18n="nav.profile">Profile</a>
+        <a href="appointment.html" data-i18n="nav.appointment">Appointment</a>
+        <a href="medical_history.html" data-i18n="nav.history">Medical History</a>
+        <a href="settings.html" data-i18n="nav.settings">Settings</a>
+        <a class="logout" href="login.html" data-i18n="nav.logout">Logout</a>
+      </nav>
     </header>
 
     <main class="user-details-card">
@@ -54,7 +66,12 @@
       <div id="formView">
         <div class="card-top-bar">
           <h1 class="card-title" data-i18n="prof.h1">Profile</h1>
-          <div class="profile-avatar" id="avatarInitials" aria-hidden="true">--</div>
+          <div class="profile-photo-control">
+            <div class="profile-avatar" id="avatarInitials" aria-hidden="true">--</div>
+            <button type="button" class="photo-change-btn" id="changePhotoBtn" data-l="photo.change">Change photo</button>
+            <input type="file" id="profilePhotoInput" accept="image/jpeg,image/png,image/webp" hidden>
+            <p class="photo-message" id="photoMsg" role="status" aria-live="polite"></p>
+          </div>
         </div>
 
         <form id="userDetailsForm" novalidate>
@@ -192,6 +209,13 @@ const LOCAL = {
     fil: "Matagumpay na na-update at na-save ang mga detalye ng iyong profile."
   },
   "done.back":     { en: "Back to Profile", fil: "Bumalik sa Profile" },
+  "photo.change": { en: "Change photo", fil: "Palitan ang larawan" },
+  "photo.uploading": { en: "Uploading photo...", fil: "Ina-upload ang larawan..." },
+  "photo.saved": { en: "Profile photo updated.", fil: "Na-update ang larawan sa profile." },
+  "photo.tooLarge": { en: "Choose an image smaller than 2 MB.", fil: "Pumili ng larawang mas maliit sa 2 MB." },
+  "photo.invalidType": { en: "Choose a JPG, PNG, or WebP image.", fil: "Pumili ng JPG, PNG, o WebP na larawan." },
+  "photo.invalid": { en: "That image could not be uploaded. Try another image.", fil: "Hindi ma-upload ang larawang iyon. Sumubok ng iba." },
+  "photo.failed": { en: "Photo upload failed. Please try again.", fil: "Hindi na-upload ang larawan. Subukan muli." },
   "err.bday.incomplete": { en: "Choose the month, day and year.", fil: "Piliin ang buwan, araw at taon." },
   "err.bday.invalid":    { en: "That date doesn't exist.", fil: "Walang ganoong petsa." },
   "err.bday.future":     { en: "Birth date can't be in the future.", fil: "Hindi puwedeng nasa hinaharap ang petsa ng kapanganakan." },
@@ -318,8 +342,13 @@ function paintAvatar(name) {
 
   if (currentPhoto) {
     const img = document.createElement("img");
-    img.src = currentPhoto;
     img.alt = "";
+    img.onerror = () => {
+      if (!el.contains(img)) return;
+      currentPhoto = "";
+      el.textContent = initials(name);
+    };
+    img.src = currentPhoto + (currentPhoto.includes("?") ? "&" : "?") + "v=" + Date.now();
     el.appendChild(img);
   } else {
     el.textContent = initials(name);
@@ -334,7 +363,18 @@ function syncSidebar() {
   byId("sideName").textContent = p.name || "";
   byId("sideEmail").textContent = p.email || p.phone || "";
 
-  if (!avatar.querySelector("img")) avatar.textContent = initials(p.name);
+  avatar.textContent = "";
+  if (currentPhoto) {
+    const img = document.createElement("img");
+    img.alt = "";
+    img.onerror = () => {
+      if (avatar.contains(img)) avatar.textContent = initials(p.name);
+    };
+    img.src = currentPhoto + (currentPhoto.includes("?") ? "&" : "?") + "v=" + Date.now();
+    avatar.appendChild(img);
+  } else {
+    avatar.textContent = initials(p.name);
+  }
 }
 
 /* ===== Phone numbers =====
@@ -385,7 +425,7 @@ function loadProfile() {
   const acct = Auth.profile();
   const extra = Auth.getData("profileExtra", {}) || {};
 
-  currentPhoto = acct.photo || "";
+  currentPhoto = acct.photo || "/api/profile/photo";
 
   byId("fullName").value = acct.name || "";
   byId("email").value = acct.email || "";
@@ -417,6 +457,54 @@ byId("backToEditBtn").addEventListener("click", showForm);
 
 // Initials follow the name while typing
 byId("fullName").addEventListener("input", (e) => paintAvatar(e.target.value));
+
+byId("changePhotoBtn").addEventListener("click", () => byId("profilePhotoInput").click());
+byId("profilePhotoInput").addEventListener("change", async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const message = byId("photoMsg");
+  if (file.size > 2 * 1024 * 1024) {
+    message.textContent = tr("photo.tooLarge");
+    event.target.value = "";
+    return;
+  }
+  if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+    message.textContent = tr("photo.invalidType");
+    event.target.value = "";
+    return;
+  }
+
+  const button = byId("changePhotoBtn");
+  button.disabled = true;
+  message.textContent = tr("photo.uploading");
+  try {
+    const formData = new FormData();
+    formData.append("photo", file);
+    const response = await fetch("/api/profile/photo", {
+      method: "POST",
+      headers: { "X-Requested-With": "XMLHttpRequest" },
+      body: formData
+    });
+    const result = await response.json();
+    if (!response.ok || !result.ok) {
+      if (result.error === "photo_too_large" || result.error === "too_large") message.textContent = tr("photo.tooLarge");
+      else if (result.error === "unsupported_image_type") message.textContent = tr("photo.invalidType");
+      else message.textContent = tr("photo.invalid");
+      return;
+    }
+
+    currentPhoto = result.photo;
+    paintAvatar(byId("fullName").value);
+    syncSidebar();
+    message.textContent = tr("photo.saved");
+  } catch (error) {
+    message.textContent = tr("photo.failed");
+  } finally {
+    button.disabled = false;
+    event.target.value = "";
+  }
+});
 
 /* ===== Save ===== */
 byId("userDetailsForm").addEventListener("submit", (e) => {

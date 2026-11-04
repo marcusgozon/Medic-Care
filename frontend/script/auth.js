@@ -1,5 +1,3 @@
-/* Shared auth/account API backed by backend/app.py. Load before page scripts that use Auth. */
-
 (function () {
     "use strict";
 
@@ -8,7 +6,6 @@
     const HOME = IN_PAGES ? "../index.html" : "index.html";
     const API = "/api";
 
-    // The pages consume each result immediately after the request.
     function call(method, path, body) {
         if (window.location.protocol === "file:") {
             return { status: 0, data: { ok: false, error: "server_required" }, json: false };
@@ -42,6 +39,22 @@
     function refresh() {
         const r = call("GET", "/me");
         cache = r.status === 200 && r.data && r.data.user ? r.data.user : null;
+        return cache;
+    }
+
+    async function refreshAsync() {
+        const response = await fetch(API + "/me", { cache: "no-store" });
+        if (!response.ok) {
+            throw new Error("Could not refresh account data (" + response.status + ").");
+        }
+        const data = await response.json();
+        if (!data.ok || !Object.prototype.hasOwnProperty.call(data, "user")) {
+            throw new Error("The account refresh response was invalid.");
+        }
+        cache = data.user || null;
+        if (!cache && document.documentElement.hasAttribute("data-requires-login")) {
+            location.replace(LOGIN);
+        }
         return cache;
     }
 
@@ -83,7 +96,18 @@
         refresh();
     }
 
-    // Accounts are identified by e-mail address only.
+    // --- BAN CHECK HEARTBEAT ---
+    // If the user is logged in, check every 15 seconds if they got banned.
+    if (cache) {
+        setInterval(() => {
+            const r = call("GET", "/me");
+            if (r.status === 200 && (!r.data || !r.data.user)) {
+                alert("Your session has ended or your account is unavailable. Please sign in again.");
+                window.location.href = LOGIN;
+            }
+        }, 15000);
+    }
+
     function normalize(raw) {
         return String(raw || "").trim().toLowerCase();
     }
@@ -136,7 +160,7 @@
         });
 
         if (r.data && r.data.ok) {
-            return { ok: true, id: r.data.id };
+            return { ok: true, id: r.data.id, needs_verification: r.data.needs_verification };
         }
 
         return {
@@ -145,6 +169,14 @@
                 (r.status === 0 ? "network" :
                     !r.json ? "server_required" : "error")
         };
+    }
+
+    function verifySignup(raw, code) {
+        const r = call("POST", "/signup/verify", { id: raw, code: code });
+        if (r.data && r.data.ok) {
+            return { ok: true };
+        }
+        return { ok: false, error: (r.data && r.data.error) || "invalid_code" };
     }
 
     function verify(raw, pw) {
@@ -162,8 +194,6 @@
         };
     }
 
-
-    // Asks (without freezing the page) whether the e-mailed login link has been opened yet.
     function loginStatus(cb) {
         const xhr = new XMLHttpRequest();
         xhr.open("GET", API + "/login-status", true);
@@ -183,7 +213,6 @@
             : { ok: false, reason: (r.data && r.data.error) || (r.status === 0 ? "network" : "error") };
     }
 
-    // Used by confirm-login.html, which is opened from the e-mail (possibly on another device).
     function confirmLogin(token) {
         const r = call("POST", "/confirm-login", { token: token });
         return r.data && r.data.ok
@@ -275,7 +304,6 @@
             : fallback;
     }
 
-    // Returns true when saved, false on failure (always a real boolean).
     function setData(key, value) {
         if (!cache) {
             return false;
@@ -294,11 +322,8 @@
 
     const getAppointments = () => {
         const list = getData("appointments", []);
-        const items = (Array.isArray(list) ? list : []).map((a) =>
-            a.status === "Pending" ? Object.assign({}, a, { status: "Confirmed" }) : a
-        );
-
-        // ids must be integers; repair anything that came back as text like "3"
+        const items = (Array.isArray(list) ? list : []);
+        
         let maxId = 0;
         items.forEach((a) => {
             const n = parseInt(a.id, 10);
@@ -321,7 +346,6 @@
         );
     };
 
-    // Returns the end of the slot, or the end of the appointment date if its time is missing.
     function slotEnd(a) {
         if (!a || !a.date) return null;
 
@@ -400,14 +424,14 @@
 
             if (avatar) {
                 avatar.textContent = "";
-                if (p.photo) {
-                    const img = document.createElement("img");
-                    img.src = p.photo;
-                    img.alt = "";
-                    avatar.appendChild(img);
-                } else {
+                const img = document.createElement("img");
+                img.alt = "";
+                img.onerror = function () {
+                    if (!avatar.contains(img)) return;
                     avatar.textContent = initials(p.name);
-                }
+                };
+                img.src = (p.photo || "/api/profile/photo") + "?v=" + Date.now();
+                avatar.appendChild(img);
             }
         }
         paintAccount();
@@ -428,15 +452,13 @@
         if (search) search.addEventListener("input", filterNav);
         window.addEventListener("langchange", filterNav);
 
-        const logoutLink = sidebar.querySelector(".logout");
-        if (logoutLink) {
+        document.querySelectorAll(".logout").forEach((logoutLink) => {
             logoutLink.addEventListener("click", () => { logout(); });
-        }
+        });
 
         return { setSidebar: setSidebar };
     }
 
-    // Password reset by e-mail (the account must use an e-mail address as its login).
     function requestReset(email) {
         const r = call("POST", "/forgot-password", { email: normalize(email) });
         return r.data && r.data.ok
@@ -460,6 +482,7 @@
         validId: validId,
 
         createUser: createUser,
+        verifySignup: verifySignup,
         verify: verify,
         current: current,
         login: login,
@@ -487,12 +510,12 @@
         requestReset: requestReset,
         resetPassword: resetPassword,
 
-        refresh: refresh
+        refresh: refresh,
+        refreshAsync: refreshAsync
     };
 
     window.Auth = Auth;
 
-    // Run before page scripts so protected pages redirect before initialization.
     (function enforcePageRules() {
         const html = document.documentElement;
 
@@ -506,7 +529,7 @@
         }
     })();
 
-           function toggleSignupPassword(inputId, buttonId) {
+    function toggleSignupPassword(inputId, buttonId) {
         const inputField = document.getElementById(inputId);
         const eyeButton = document.getElementById(buttonId);
         if (!inputField || !eyeButton) return;
@@ -533,5 +556,4 @@
         }
     }
     window.toggleSignupPassword = toggleSignupPassword;
-    
 })();

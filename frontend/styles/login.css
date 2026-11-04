@@ -1,0 +1,100 @@
+body[data-page="login"] .login-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5px;
+  margin: 0 0 26px;
+  padding: 5px;
+  border: 1px solid rgba(31, 95, 214, .12);
+  border-radius: 14px;
+  background: #eaf1ff;
+}
+
+body[data-page="login"] .login-tab {
+  min-height: 42px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #435474;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .18s, color .18s, box-shadow .18s;
+}
+
+body[data-page="login"] .login-tab:hover {
+  color: #0e2a7d;
+}
+
+body[data-page="login"] .login-tab.active {
+  background: #fff;
+  color: #0e2a7d;
+  box-shadow: 0 2px 8px rgba(27, 58, 143, .12);
+}
+
+body[data-page="login"] .login-panel[hidden],
+body[data-page="login"] #adminCredentials[hidden],
+body[data-page="login"] #adminVerification[hidden] {
+  display: none !important;
+}
+
+body[data-page="login"] .admin-code-prompt {
+  margin: 0 0 20px;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+body[data-page="login"] .admin-code-prompt strong {
+  color: #0e2a7d;
+}
+
+body[data-page="login"] #adminCode {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: .45em;
+}
+
+body[data-page="login"] .admin-resend {
+  display: block;
+  margin: -8px 0 18px auto;
+  border: 0;
+  background: transparent;
+  color: #1f5fd6;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+body[data-page="login"] .admin-resend:hover {
+  text-decoration: underline;
+}
+
+body[data-page="login"] .admin-msg {
+  min-height: 18px;
+  margin: 0 0 14px;
+  color: #2866d7;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+body[data-page="login"] .admin-msg.error {
+  color: #c0182b;
+}
+
+body[data-page="login"] .admin-msg:empty {
+  min-height: 0;
+}
+
+body[data-page="login"] #adminSubmit {
+  margin-top: 2px;
+}
+
+body[data-page="login"] .login-tab:focus-visible,
+body[data-page="login"] .admin-resend:focus-visible {
+  outline: 3px solid rgba(31, 95, 214, .45);
+  outline-offset: 2px;
+}

@@ -1,57 +1,59 @@
 # Medic Care
 
-Medic Care is a small healthcare website where patients can create an account,
-book appointments, and manage their account details. The experience is designed
-around a polished, trustworthy medical brand with a clean interface, consistent
-visual identity, and patient-friendly layouts.
+Medic Care is a healthcare appointment web app for patients to discover services, request appointments, and manage their account. Staff can review appointment requests and manage users through a separate admin portal.
 
-## Branding
+## Features
 
-Medic Care uses a healthcare-focused visual system that reinforces trust,
-professionalism, and clarity. The branding is carried through the logo,
-favicon, hero imagery, page styling, and overall layout so patients can quickly
-recognize the application across screens and features.
+- Browse the public landing page and available medical services
+- Create an account, sign in, and optionally verify the email address
+- Book appointments through a guided, multi-step flow
+- View appointment history, and reschedule or cancel appointments
+- Receive in-app notifications when an appointment is approved or denied
+- Review and manage appointment requests in the admin portal, including denial reasons
+- Manage user accounts and appointment records as an administrator
+- Keep profile details, contact information, and a profile photo (JPG, PNG, or WebP; up to 2 MB) in the database
+- Change a password or request a password-reset email
+- Choose English or Filipino and switch between light and dark themes
+- Use responsive layouts on desktop and mobile devices
 
-Key branding elements include:
+---
 
-- A modern medical logo and favicon for a recognizable identity.
-- A calm, professional color palette suited to healthcare services.
-- Consistent typography and spacing for a more premium patient experience.
-- Cohesive hero and page design that supports appointment booking and account
-  management workflows.
+## Initial Setup (Windows)
 
-## What you can do
+Follow these steps to run the web app locally. The Flask server serves both the frontend and backend; do not open the HTML files directly.
 
-- Browse the home page and available medical services.
-- Create an account and sign in with an email address.
-- Book an appointment by choosing a service, date, time, and entering patient
-  details.
-- View, reschedule, or cancel your appointments.
-- Review appointment records in Medical History.
-- Update your profile and phone number.
-- Change your language between English and Filipino.
-- Change your password or delete your account.
-- Request a password-reset link by email.
+### What You Need
 
-Login email confirmation is optional. It can be enabled when an email server is
-configured.
+Install these first:
 
-## Run the website on Windows
+1. **Python 3** – [Download Python](https://www.python.org/downloads/)
+2. **MySQL Server 8.x** – [Download MySQL Community Server](https://dev.mysql.com/downloads/mysql/)
+3. **MySQL Workbench** (recommended) – [Download Workbench](https://dev.mysql.com/downloads/workbench/)
 
-The website needs Python, MySQL Server, and (optionally) MySQL Workbench. Workbench
-is a convenient way to set up the database, but the app itself connects to MySQL
-Server.
+> MySQL Workbench is a visual tool for managing the database. MySQL Server must be installed and running for the website to work.
 
-### 1. Create the database
+### 1. Open the Project
 
-1. Start MySQL Server.
-2. Open MySQL Workbench and connect to your local server.
-3. Open `backend/schema.sql` and run the script. It creates the `medic_care`
-   database and required tables.
+1. Extract the project ZIP file.
+2. Open the extracted `MedicCare` folder in VS Code.
+3. In VS Code, open **Terminal → New Terminal**.
+4. Make sure the terminal is in the project root (the folder containing `README.md`).
 
-### 2. Install the Python packages
+### 2. Create the MySQL Database
 
-Open PowerShell in the project folder and run:
+1. Start your local MySQL Server.
+2. Open MySQL Workbench and connect to your local MySQL connection.
+3. In VS Code, open `backend/schema.sql`.
+4. Copy the SQL script and paste it into a new query tab in MySQL Workbench.
+5. Execute the script.
+
+This creates the `medic_care` database and the tables needed by the app, including user accounts, appointments, notifications, profile details, and profile photos.
+
+New appointments remain pending until an administrator reviews them. When denying a request, the administrator must enter a reason, which is included in the patient's notification. Appointment status and notifications refresh while the page is open.
+
+### 3. Set Up Python
+
+In the VS Code terminal, run these commands from the project root:
 
 ```powershell
 py -m venv .venv
@@ -59,89 +61,114 @@ py -m venv .venv
 python -m pip install -r requirements.txt
 ```
 
-If PowerShell does not allow activating the virtual environment, you can run
-Python from it directly instead:
+This creates and activates a virtual environment, then installs the required packages.
+
+**If PowerShell does not allow activation**, you can install the packages without activating the environment:
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 ```
 
-### 3. Configure the app
+Use that same Python executable to start the app in Step 5 if you did not activate the environment.
 
-Create `backend\.env` from the example if it does not already exist:
+### 4. Configure the Database Connection
 
-```powershell
-if (-not (Test-Path backend\.env)) { Copy-Item backend\.env.example backend\.env }
-```
+1. In VS Code, find `backend/.env.example`.
+2. Make a copy of that file inside the same `backend` folder.
+3. Rename the copied file to `.env` (the final path should be `backend/.env`).
+4. Open `backend/.env` and enter your own local MySQL details.
 
-Open `backend\.env` and set `DB_PASSWORD` to your MySQL password. Also replace
-`SECRET_KEY` with a long, random value. The other database settings normally
-work for a local MySQL installation:
+Example configuration:
 
-```text
-SECRET_KEY=replace-with-a-long-random-value
+```env
+SECRET_KEY=replace-this-with-a-long-random-value
 DB_HOST=127.0.0.1
 DB_PORT=3306
 DB_USER=root
-DB_PASSWORD=your-mysql-root-password
+DB_PASSWORD=your_mysql_password
 DB_NAME=medic_care
 LOGIN_EMAIL_VERIFICATION=0
 ```
 
-Keep `LOGIN_EMAIL_VERIFICATION=0` for local development without an email
-service. To require an email confirmation every time someone signs in, set it
-to `1` and configure `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`,
-`SMTP_PASSWORD`, and `RESET_EMAIL_FROM`. Email settings are also needed to send
-password-reset links.
+Set these values to match your local setup:
 
-### 4. Start the website
+- `DB_USER`: your MySQL username. `root` is common for a local installation.
+- `DB_PASSWORD`: the password you set for that MySQL user. Leave it empty only if your MySQL account has no password.
+- `DB_PORT`: usually `3306`. If your MySQL Server uses another port, enter that port instead.
+- `SECRET_KEY`: use a long, random secret.
 
-From the project folder, run:
+Keep `LOGIN_EMAIL_VERIFICATION=0` to test locally without email verification. Email verification and password-reset emails require an email service configured in `backend/.env` (Brevo or SMTP). See `backend/.env.example` for the supported email variable names.
+
+> Do not share your `backend/.env` file or upload it to GitHub. It contains private configuration and credentials.
+
+### 5. Start the Web App
+
+If your virtual environment is activated, run:
 
 ```powershell
 python backend\app.py
 ```
 
-Open **http://127.0.0.1:10000/** in your browser. Use the site through this
-address rather than opening the HTML files directly. Leave the PowerShell
-window running while you use the website; press `Ctrl+C` there to stop it.
+If you did not activate it, run:
 
-The app uses port `10000` by default. To use another port, set the `PORT`
-environment variable before starting the app.
+```powershell
+.\.venv\Scripts\python.exe backend\app.py
+```
 
-## Project layout
+When the server starts, open this address in your browser:
 
-| Path | What it contains |
-| --- | --- |
-| `backend/app.py` | Flask server, API, and local website server |
-| `backend/schema.sql` | MySQL database and table definitions |
-| `backend/.env.example` | Example local configuration |
-| `frontend/index.html` | Home page |
-| `frontend/assets/` | Branding assets including the logo, favicon, and hero image |
-| `frontend/pages/` | Signup, login, booking, appointments, profile, history, and settings |
-| `frontend/script/` | Shared account and language functionality |
-| `frontend/styles/medic-care.css` | Shared, page-scoped styles, responsive layouts, and motion |
+**http://127.0.0.1:10000/**
+
+Keep the terminal open while using the website. To stop the server, go back to the terminal and press **Ctrl + C**.
+
+### Admin Access (Optional)
+
+Admin access is provisioned for an existing account by an authorized database administrator. After creating the account, its `users.role` must be set to `admin`. Admin sign-in uses an emailed verification code, so configure an email service before using the admin portal at **http://127.0.0.1:10000/admin**.
+
+---
+
+## Project Structure
+
+```text
+MedicCare/
+├── backend/
+│   ├── app.py              # Flask server and application logic
+│   ├── schema.sql          # MySQL database and tables
+│   ├── .env.example        # Sample local configuration
+│   └── .env                # Your private local settings (create this)
+├── frontend/
+│   ├── assets/             # Images and logos
+│   ├── pages/              # Website pages
+│   ├── script/             # JavaScript files
+│   ├── styles/             # CSS files
+│   └── index.html          # Homepage
+├── requirements.txt        # Python dependencies
+└── README.md               # Features and setup instructions
+```
 
 ## Troubleshooting
 
-- **The page cannot reach the server:** Make sure `python backend\app.py` is
-  still running, and open the local address above.
-- **Database connection error:** Confirm MySQL Server is running and that
-  `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, and `DB_NAME` in
-  `backend\.env` match your MySQL setup. Make sure you ran `backend/schema.sql`.
-- **Email confirmation or password reset does not arrive:** Check your SMTP
-  settings and spam folder. For local sign-in without email, use
-  `LOGIN_EMAIL_VERIFICATION=0`.
+**The website does not open**
+- Check that the Flask server is still running in the terminal.
+- Make sure you opened `http://127.0.0.1:10000/` and did not open an HTML file directly.
 
-## Deployment note
+**MySQL connection error**
+- Make sure MySQL Server is running.
+- Check the host, port, username, and password in `backend/.env`.
+- Confirm that you executed `backend/schema.sql` in MySQL Workbench.
+- Make sure `DB_NAME` is set to `medic_care`.
 
-Run the production server with:
+**Python or package command is not recognized**
+- Confirm that Python is installed.
+- On Windows, try using `py` instead of `python`.
+- Re-run the dependency installation command from Step 3.
 
-```powershell
-gunicorn --chdir backend app:app
-```
+**Email verification or password reset does not work**
+- Email features need valid Brevo or SMTP settings in `backend/.env`.
+- For local testing without email, set `LOGIN_EMAIL_VERIFICATION=0`.
 
-Configure `SECRET_KEY`, the `DB_*` settings, email settings as needed,
-`SESSION_COOKIE_SECURE=1`, `TRUST_PROXY=1` (when behind a trusted proxy), and
-`PUBLIC_URL`. Do not commit `backend/.env` or use development server settings in
-production.
+---
+
+## Notes for Deployment
+
+The instructions above are for local development only. For deployment, configure the production environment variables, database connection, email service, and secure cookie settings on your hosting provider. Never use your local `.env` file or development credentials in production.

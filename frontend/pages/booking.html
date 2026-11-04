@@ -7,8 +7,10 @@
   <title>Book an Appointment</title>
   <link rel="icon" type="image/png" href="../assets/medic-care-favicon.png">
   <script src="../script/auth.js"></script>
-
+  <script src="../script/theme.js"></script>
+  <script src="../script/profile-avatar.js" defer></script>
   <link rel="stylesheet" href="../styles/medic-care.css">
+  <link rel="stylesheet" href="../styles/polish.css">
 </head>
 
 <body data-page="booking">
@@ -708,7 +710,7 @@
         spec: (subServicesData[selectedCategoryCode] || {}).subtitle ? subServicesData[selectedCategoryCode].subtitle.replace(/[()]/g, "").split(",")[0].trim() : "",
         service: selectedCategoryName,
         specific: selectedSpecific,
-        status: "Confirmed",
+        status: "Pending",
         date: selectedISO(),
         time: slotLabel(selectedTime),
         patient: { first: val("fn"), middle: val("mn"), last: val("ln"), suffix: val("suffix"), dob: val("dob"), sex: val("sex"), phone: val("phone"), email: val("email") }
