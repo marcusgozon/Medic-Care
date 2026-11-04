@@ -1,5 +1,9 @@
-# secrets - never commit
 .env
-backend/.env
+.env.*
+!.env.example
+
+.venv/
+venv/
 __pycache__/
 *.pyc
+.vscode/
