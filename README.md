@@ -1,22 +1,35 @@
 # Medic Care
 
-Medic Care is a healthcare appointment web app for patients to discover services, request appointments, and manage their account. Staff can review appointment requests and manage users through a separate admin portal.
+> **Healthcare appointments, made simpler.**
+>
+> Medic Care helps patients find services, book appointments, and manage their care. Clinic staff can review bookings and manage patient accounts from the admin portal.
 
 ## Features
 
-- Browse the public landing page and available medical services
-- Create an account, sign in, and optionally verify the email address
-- Book appointments through a guided, multi-step flow
-- View appointment history, and reschedule or cancel appointments
-- Receive in-app notifications with sound when an appointment is approved or denied
-- Get a 30-minute reminder popup and alert sound for confirmed appointments while using the patient dashboard
-- Receive one appointment reminder email about one hour before a confirmed appointment
-- Review and manage appointment requests in the admin portal, including denial reasons
-- Manage user accounts and appointment records as an administrator
-- Keep profile details, contact information, and a profile photo (JPG, PNG, or WebP; up to 2 MB) in the database
-- Change a password or request a password-reset email
-- Choose English or Filipino and switch between light and dark themes
-- Use responsive layouts on desktop and mobile devices
+### 🩺 For Patients
+
+| | |
+|---|---|
+| **Find care** | Browse medical services and book through a guided appointment flow. |
+| **Manage appointments** | View appointment history, and reschedule or cancel bookings. |
+| **Stay informed** | Get in-app updates with a notification sound when an appointment is approved or denied. |
+| **Appointment reminders** | See a reminder popup and hear `alert.mp3` during the 30 minutes before a confirmed appointment. Receive one reminder email when an appointment is due within an hour. |
+| **Manage your account** | Update profile details, contact information, and a profile photo (JPG, PNG, or WebP; up to 2 MB). Change your password or request a reset email. |
+
+### 🗂️ For Clinic Staff
+
+- Review appointment requests and update their status.
+- Provide a reason when denying an appointment; patients receive that reason in their notification.
+- Manage patient accounts and appointment records in the admin portal.
+- Receive a notification sound when a new appointment is waiting for review.
+
+### ✨ Designed for Everyday Use
+
+- Choose English or Filipino.
+- Switch between light and dark themes.
+- Use a responsive interface on desktop or mobile.
+
+> **Reminder timing:** Appointment times use Philippine time (UTC+8). The in-app popup checks for upcoming appointments while the patient is using the site. Reminder emails are checked as the app receives patient notification requests, so delivery depends on the site receiving traffic near the reminder time. Configure the optional Render Cron Job in [Appointment Reminders](#appointment-reminders) for checks independent of site activity.
 
 ---
 
@@ -177,6 +190,16 @@ The instructions above are for local development only. For deployment, configure
 
 ### Appointment Reminders
 
-The patient dashboard checks confirmed appointments and shows a popup with `frontend/assets/alert.mp3` during the 30 minutes before the appointment. The sound plays after the user interacts with the page, as required by browser autoplay policies. Appointment dates and times are interpreted as Philippine time (UTC+8).
+For confirmed appointments, the patient dashboard shows an in-app reminder and plays `frontend/assets/alert.mp3` during the 30 minutes before the appointment. The browser may require a user interaction before it allows audio playback.
 
-When the app receives a patient notification request, it checks for confirmed appointments starting within the next hour and sends each patient one reminder email. This request-driven check does not require a separate Cron Job, but it only runs while the web app is receiving requests; it cannot send reminders while the service is asleep or has no traffic. For reminders that run independently of site traffic, configure a Render Cron Job to run `python -m backend.reminders` once per minute and provide it the same database and Brevo (or SMTP) environment variables as the web service.
+The backend checks for appointments due within one hour when it receives a patient notification request and sends each patient one email reminder. This does not require a Cron Job, but it depends on the web app receiving requests near the reminder time. If the service is asleep or has no traffic, the email may be late or missed.
+
+For checks independent of site activity, optionally configure a **Render Cron Job**:
+
+1. Use the same repository and branch as the web service.
+2. Set the build command to `pip install -r requirements.txt`.
+3. Set the start command to `python -m backend.reminders`.
+4. Set the schedule to `* * * * *` (once per minute).
+5. Add the same production database and email environment variables used by the web service, including `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, and either Brevo (`BREVO_API_KEY`, `BREVO_SENDER_EMAIL`) or SMTP settings.
+
+Each appointment reminder email is sent at most once for its scheduled booking. A valid Brevo API key and verified sender are required when using Brevo.
