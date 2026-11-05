@@ -7,4 +7,6 @@
 - create demo
 - create summary for code and paper for fratures
 - import export mysql schema and upload cloud
+- add alert when appointment schedule is 1hour before appointment
+- add notification sound when there is new notification for patient and admin (assets/notification.mp3)
 - fix console on browser

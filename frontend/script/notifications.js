@@ -34,6 +34,7 @@
   let loading = false;
   let knownNotificationIds = null;
   let appointmentSnapshot = JSON.stringify(Auth.getAppointments());
+  const reminderStoragePrefix = `medic-care-reminder:${Auth.current().id}:`;
   let toastTimer;
 
   const toast = document.createElement("div");
@@ -44,9 +45,56 @@
 
   function showToast(message) {
     toast.textContent = message;
+    toast.classList.remove("appointment-reminder");
     toast.classList.add("show");
     window.clearTimeout(toastTimer);
     toastTimer = window.setTimeout(() => toast.classList.remove("show"), 5000);
+  }
+
+  function appointmentStart(date, time) {
+    const match = /^\s*(\d{1,2}):(\d{2})\s*(AM|PM)/i.exec(time || "");
+    const [year, month, day] = String(date || "").split("-").map(Number);
+    if (!match || !year || !month || !day) return null;
+    let hour = Number(match[1]) % 12;
+    if (match[3].toUpperCase() === "PM") hour += 12;
+    const startsAt = new Date(year, month - 1, day, hour, Number(match[2]));
+    return Number.isNaN(startsAt.getTime()) ? null : startsAt;
+  }
+
+  function showAppointmentReminder(appointmentId, date, time, doctor) {
+    const startsAt = appointmentStart(date, time);
+    if (!startsAt) return;
+    const minutesUntil = (startsAt.getTime() - Date.now()) / 60000;
+    if (minutesUntil < 0 || minutesUntil > 30) return;
+
+    const key = `${reminderStoragePrefix}${appointmentId}:${date}:${time}`;
+    if (window.localStorage.getItem(key)) return;
+    window.localStorage.setItem(key, "shown");
+    showToast(t("notification.reminder", { doctor, date, time }));
+    toast.classList.add("appointment-reminder");
+    window.clearTimeout(toastTimer);
+    toastTimer = window.setTimeout(() => {
+      toast.classList.remove("show", "appointment-reminder");
+    }, 10000);
+    if (window.playAppointmentReminderSound) window.playAppointmentReminderSound();
+  }
+
+  function checkUpcomingAppointments(appointments) {
+    const now = new Date();
+    appointments.forEach(appointment => {
+      if (String(appointment.status || "").toLowerCase() !== "confirmed") return;
+      const startsAt = appointmentStart(appointment.date, appointment.time);
+      if (!startsAt) return;
+      const minutesUntil = (startsAt.getTime() - now.getTime()) / 60000;
+      if (minutesUntil >= 0 && minutesUntil <= 30) {
+        showAppointmentReminder(
+          appointment.id,
+          appointment.date,
+          appointment.time,
+          appointment.doctorName || t("notification.title")
+        );
+      }
+    });
   }
 
   function showMessage(message) {
@@ -72,7 +120,8 @@
       const messageKey = {
         appointment_confirmed: "notification.confirmed",
         appointment_cancelled: "notification.cancelled",
-        appointment_unavailable: "notification.unavailableSlot"
+        appointment_unavailable: "notification.unavailableSlot",
+        appointment_reminder: "notification.reminder"
       }[notification.type] || "notification.title";
       const message = document.createElement("span");
       message.textContent = t(messageKey, {
@@ -122,11 +171,30 @@
         throw new Error("The notification response was invalid.");
       }
       const appointments = Array.isArray(user.data?.appointments) ? user.data.appointments : [];
+      checkUpcomingAppointments(appointments);
       const nextAppointmentSnapshot = JSON.stringify(appointments);
       if (appointmentSnapshot !== null && appointmentSnapshot !== nextAppointmentSnapshot) {
         window.dispatchEvent(new CustomEvent("appointments:updated", { detail: appointments }));
       }
       appointmentSnapshot = nextAppointmentSnapshot;
+      data.notifications
+        .filter(notification => notification.type === "appointment_reminder")
+        .forEach(notification => {
+          const appointment = appointments.find(item =>
+            String(item.id) === String(notification.appointment_id)
+            && String(item.status || "").toLowerCase() === "confirmed"
+            && item.date === notification.date
+            && item.time === notification.time
+          );
+          if (appointment) {
+            showAppointmentReminder(
+              notification.appointment_id,
+              notification.date,
+              notification.time,
+              notification.doctor_name
+            );
+          }
+        });
       const currentIds = new Set(data.notifications.map(notification => notification.id));
       if (knownNotificationIds) {
         const newUnread = data.notifications.find(notification =>
@@ -139,6 +207,7 @@
             appointment_unavailable: "notification.unavailableSlot"
           }[newUnread.type];
           if (messageKey) {
+            if (window.playNotificationSound) window.playNotificationSound();
             showToast(t(messageKey, {
               doctor: newUnread.doctor_name,
               date: newUnread.date,

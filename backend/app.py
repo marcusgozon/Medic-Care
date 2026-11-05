@@ -33,7 +33,7 @@ DB_CONFIG = {
     "host": os.getenv("DB_HOST", "127.0.0.1"),
     "port": int(os.getenv("DB_PORT", "3306")),
     "user": os.getenv("DB_USER", "root"),
-    "password": os.getenv("DB_PASSWORD", ""),
+    "password": os.getenv("DB_PASSWORD", "admin"),
     "database": os.getenv("DB_NAME", "medic_care"),
     "charset": "utf8mb4",
 }
@@ -52,7 +52,7 @@ VERIFY_WINDOW = 600
 LOGIN_LINK_MINUTES = 15
 RESET_TOKEN_MINUTES = 30
 FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
-STATIC_EXTENSIONS = {".html", ".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp"}
+STATIC_EXTENSIONS = {".html", ".css", ".js", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp", ".mp3"}
 
 BREVO_API_KEY = os.getenv("BREVO_API_KEY")
 BREVO_SENDER_EMAIL = os.getenv("BREVO_SENDER_EMAIL", "noreply@mediccare.com")
@@ -963,7 +963,7 @@ def get_notifications():
     ensure_notifications_table()
     with db_cursor() as cursor:
         cursor.execute(
-            "SELECT id, type, doctor_name, appointment_date, appointment_time, reason, created_at, read_at "
+            "SELECT id, type, doctor_name, appointment_date, appointment_time, reason, created_at, read_at, appointment_id "
             "FROM notifications WHERE user_id=%s ORDER BY id DESC LIMIT 50",
             (uid,),
         )
@@ -974,6 +974,7 @@ def get_notifications():
                 "doctor_name": row["doctor_name"],
                 "date": row["appointment_date"].isoformat() if row["appointment_date"] else "",
                 "time": row["appointment_time"],
+                "appointment_id": row.get("appointment_id"),
                 "reason": row["reason"],
                 "created_at": row["created_at"].isoformat() if row["created_at"] else "",
                 "read": row["read_at"] is not None,

@@ -5,6 +5,8 @@ const closeSidebar = document.getElementById('closeSidebar');
 let dashboardInitialized = false;
 let dataLoading = false;
 let pendingDenialAppointmentId = null;
+let renderedRecentAppointmentsKey = null;
+let knownPendingAppointmentIds = null;
 const adminNotificationTrigger = document.getElementById('adminNotificationTrigger');
 const adminNotificationTray = document.getElementById('adminNotificationTray');
 const adminNotificationList = document.getElementById('adminNotificationList');
@@ -14,18 +16,21 @@ function createPatientAvatar(name, userId, className = 'patient-list-avatar') {
     const avatar = document.createElement('span');
     avatar.className = className;
     const nameParts = String(name || '').trim().split(/\s+/).filter(Boolean);
-    avatar.textContent = nameParts.length > 1
+    const initials = nameParts.length > 1
         ? `${nameParts[0][0]}${nameParts[nameParts.length - 1][0]}`.toUpperCase()
         : (nameParts[0] || 'P').slice(0, 2).toUpperCase();
 
     if (userId) {
         const image = document.createElement('img');
         image.alt = '';
-        image.addEventListener('load', () => {
-            avatar.textContent = '';
-            avatar.append(image);
+        image.addEventListener('error', () => {
+            image.remove();
+            avatar.textContent = initials;
         }, { once: true });
-        image.src = `/api/admin/users/${encodeURIComponent(userId)}/photo?v=${Date.now()}`;
+        avatar.append(image);
+        image.src = `/api/admin/users/${encodeURIComponent(userId)}/photo`;
+    } else {
+        avatar.textContent = initials;
     }
 
     return avatar;
@@ -38,6 +43,13 @@ function setAdminNotificationTray(open) {
 
 function renderAdminNotifications(appointments) {
     const pending = appointments.filter(appointment => appointment.status === 'Pending');
+    const pendingIds = new Set(pending.map(appointment => String(appointment.id)));
+    if (knownPendingAppointmentIds
+        && pending.some(appointment => !knownPendingAppointmentIds.has(String(appointment.id)))
+        && window.playNotificationSound) {
+        window.playNotificationSound();
+    }
+    knownPendingAppointmentIds = pendingIds;
     adminNotificationCount.hidden = pending.length === 0;
     adminNotificationCount.textContent = pending.length > 99 ? '99+' : String(pending.length);
     adminNotificationList.replaceChildren();
@@ -226,9 +238,9 @@ async function loadDashboardData() {
             apptsTbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 20px; color: #6b7794;">No appointments found in the database.</td></tr>`;
         } else {
             appts.forEach(a => {
-                const badgeClass = a.status === 'Confirmed' ? 'status-confirmed' : 
-                                   a.status === 'Pending' ? 'status-pending' : 
-                                   a.status === 'Completed' ? 'status-completed' : 'status-cancelled';
+                const badgeClass = a.status === 'Confirmed' ? 'status-confirmed'
+                    : a.status === 'Pending' ? 'status-pending'
+                        : a.status === 'Completed' ? 'status-completed' : 'status-cancelled';
                 const allowedStatuses = a.status === 'Pending'
                     ? ['Pending', 'Confirmed', 'Cancelled']
                     : a.status === 'Confirmed'
@@ -256,42 +268,50 @@ async function loadDashboardData() {
             });
         }
 
-        recentTbody.innerHTML = "";
-        if (appts.length === 0) {
-            recentTbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: #6b7794;">No recent appointments.</td></tr>`;
-        } else {
-            appts.slice(0, 5).forEach(a => {
-                const badgeClass = a.status === 'Confirmed' ? 'status-confirmed' : 
-                                   a.status === 'Pending' ? 'status-pending' : 
-                                   a.status === 'Completed' ? 'status-completed' : 'status-cancelled';
-                const row = document.createElement('tr');
-                const patientCell = document.createElement('td');
-                const patientIdentity = document.createElement('div');
-                patientIdentity.className = 'recent-patient-identity';
-                patientIdentity.append(createPatientAvatar(a.patient_name, a.user_id));
-                const patientName = document.createElement('span');
-                patientName.textContent = a.patient_name || '';
-                patientIdentity.append(patientName);
-                patientCell.append(patientIdentity);
+        const recentAppointments = appts.slice(0, 5);
+        const recentAppointmentsKey = JSON.stringify(recentAppointments.map(a => [
+            a.id, a.user_id, a.patient_name, a.doctor_name, a.date, a.time, a.status
+        ]));
+        if (recentAppointmentsKey !== renderedRecentAppointmentsKey) {
+            recentTbody.replaceChildren();
+            if (recentAppointments.length === 0) {
+                recentTbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: #6b7794;">No recent appointments.</td></tr>`;
+            } else {
+                recentAppointments.forEach(a => {
+                    let badgeClass = 'status-cancelled';
+                    if (a.status === 'Confirmed') badgeClass = 'status-confirmed';
+                    else if (a.status === 'Pending') badgeClass = 'status-pending';
+                    else if (a.status === 'Completed') badgeClass = 'status-completed';
+                    const row = document.createElement('tr');
+                    const patientCell = document.createElement('td');
+                    const patientIdentity = document.createElement('div');
+                    patientIdentity.className = 'recent-patient-identity';
+                    patientIdentity.append(createPatientAvatar(a.patient_name, a.user_id));
+                    const patientName = document.createElement('span');
+                    patientName.textContent = a.patient_name || '';
+                    patientIdentity.append(patientName);
+                    patientCell.append(patientIdentity);
 
-                const doctorCell = document.createElement('td');
-                doctorCell.textContent = a.doctor_name || '';
+                    const doctorCell = document.createElement('td');
+                    doctorCell.textContent = a.doctor_name || '';
 
-                const dateCell = document.createElement('td');
-                dateCell.append(document.createTextNode(a.date || ''));
-                const time = document.createElement('small');
-                time.textContent = a.time || '';
-                dateCell.append(document.createElement('br'), time);
+                    const dateCell = document.createElement('td');
+                    dateCell.append(document.createTextNode(a.date || ''));
+                    const time = document.createElement('small');
+                    time.textContent = a.time || '';
+                    dateCell.append(document.createElement('br'), time);
 
-                const statusCell = document.createElement('td');
-                const status = document.createElement('span');
-                status.className = `status-badge ${badgeClass}`;
-                status.textContent = a.status || '';
-                statusCell.append(status);
+                    const statusCell = document.createElement('td');
+                    const status = document.createElement('span');
+                    status.className = `status-badge ${badgeClass}`;
+                    status.textContent = a.status || '';
+                    statusCell.append(status);
 
-                row.append(patientCell, doctorCell, dateCell, statusCell);
-                recentTbody.append(row);
-            });
+                    row.append(patientCell, doctorCell, dateCell, statusCell);
+                    recentTbody.append(row);
+                });
+            }
+            renderedRecentAppointmentsKey = recentAppointmentsKey;
         }
     } else {
         apptsTbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding: 20px; color: #ef4444;">Error loading appointments: ${dataAppts.error || 'Unknown Error'}</td></tr>`;

@@ -157,6 +157,26 @@ CREATE TABLE IF NOT EXISTS notifications (
 DEFAULT CHARSET=utf8mb4
 COLLATE=utf8mb4_unicode_ci;
 
+CREATE TABLE IF NOT EXISTS appointment_reminders (
+    user_id INT UNSIGNED NOT NULL,
+    client_id INT NOT NULL,
+    appointment_date DATE NOT NULL,
+    appointment_time VARCHAR(40) NOT NULL,
+    email_sent_at DATETIME NULL,
+    claim_until DATETIME NULL,
+    notification_created_at DATETIME NULL,
+
+    PRIMARY KEY (user_id, client_id),
+    KEY idx_appointment_reminders_claim (claim_until),
+
+    CONSTRAINT fk_appointment_reminders_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+        ON DELETE CASCADE
+) ENGINE=InnoDB
+DEFAULT CHARSET=utf8mb4
+COLLATE=utf8mb4_unicode_ci;
+
 
 -- ============================================================
 -- 4. PASSWORD RESETS TABLE

@@ -3510,6 +3510,12 @@ body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [
   transform: translateY(0);
 }
 
+body:is([data-page="home"], [data-page="appointments"], [data-page="profile"], [data-page="history"], [data-page="settings"]) .notification-toast.appointment-reminder {
+  border-color: #e7a82b;
+  background: #fff8e6;
+  color: #704b00;
+}
+
 body[data-page="signup"] .extracted-inline-style-1 {
   position: relative;
 }
