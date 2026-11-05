@@ -1,7 +1,7 @@
 import unittest
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 
-from backend.reminders import MANILA_TIMEZONE, appointment_start
+from backend.reminders import MANILA_TIMEZONE, appointment_start, is_due_for_reminder
 
 
 class AppointmentReminderTests(unittest.TestCase):
@@ -20,6 +20,13 @@ class AppointmentReminderTests(unittest.TestCase):
     def test_rejects_invalid_slot(self):
         with self.assertRaises(ValueError):
             appointment_start("2026-11-05", "after lunch")
+
+    def test_reminder_window_is_one_hour(self):
+        appointment = appointment_start("2026-11-05", "9:00AM - 10:00AM")
+        now = appointment - timedelta(hours=1)
+        self.assertTrue(is_due_for_reminder(appointment, now))
+        self.assertFalse(is_due_for_reminder(appointment, now - timedelta(seconds=1)))
+        self.assertFalse(is_due_for_reminder(appointment, appointment + timedelta(seconds=1)))
 
 
 if __name__ == "__main__":

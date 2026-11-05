@@ -960,6 +960,8 @@ def get_notifications():
     if not found:
         return fail("unauthorized", 401)
     uid, _ = found
+    from backend.reminders import maybe_process_due_appointment_reminders
+    maybe_process_due_appointment_reminders()
     ensure_notifications_table()
     with db_cursor() as cursor:
         cursor.execute(

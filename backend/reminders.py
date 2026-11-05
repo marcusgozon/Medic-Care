@@ -1,5 +1,7 @@
 import re
 import sys
+import threading
+import time
 from datetime import date, datetime, timedelta, timezone
 
 from backend.app import (
@@ -10,8 +12,11 @@ from backend.app import (
 )
 
 MANILA_TIMEZONE = timezone(timedelta(hours=8), "Asia/Manila")
-REMINDER_WINDOW = timedelta(minutes=30)
+REMINDER_WINDOW = timedelta(hours=1)
+REQUEST_CHECK_INTERVAL = 60
 START_TIME_RE = re.compile(r"^\s*(\d{1,2}:\d{2}\s*[APap][Mm])")
+_request_check_lock = threading.Lock()
+_last_request_check = 0.0
 
 
 def appointment_start(appointment_date, appointment_time):
@@ -27,6 +32,10 @@ def appointment_start(appointment_date, appointment_time):
         raise ValueError("Invalid appointment time.")
     start_time = datetime.strptime(match.group(1).replace(" ", "").upper(), "%I:%M%p").time()
     return datetime.combine(appointment_date, start_time, MANILA_TIMEZONE)
+
+
+def is_due_for_reminder(starts_at, now):
+    return now <= starts_at <= now + REMINDER_WINDOW
 
 
 def ensure_appointment_reminders_table():
@@ -158,7 +167,7 @@ def process_due_appointment_reminders(now=None):
                 appointment["client_id"],
             )
             continue
-        if not now <= starts_at <= now + REMINDER_WINDOW:
+        if not is_due_for_reminder(starts_at, now):
             continue
 
         user_id = appointment["user_id"]
@@ -167,7 +176,7 @@ def process_due_appointment_reminders(now=None):
             continue
 
         message = (
-            f"Reminder: your appointment with {appointment['doctor_name']} starts within the next 30 minutes.\n"
+            f"Reminder: your appointment with {appointment['doctor_name']} starts within the next hour.\n"
             f"Date: {appointment['appt_date'].isoformat()}\n"
             f"Time: {appointment['appt_time']}\n\n"
             "Please arrive on time. If you can no longer attend, contact the clinic."
@@ -192,6 +201,22 @@ def process_due_appointment_reminders(now=None):
                 client_id,
             )
     return sent_count
+
+
+def maybe_process_due_appointment_reminders():
+    global _last_request_check
+    with _request_check_lock:
+        now = time.monotonic()
+        if now - _last_request_check < REQUEST_CHECK_INTERVAL:
+            return 0
+        _last_request_check = now
+
+    try:
+        return process_due_appointment_reminders()
+    except Exception:
+        with _request_check_lock:
+            _last_request_check = 0.0
+        raise
 
 
 def main():

@@ -10,7 +10,7 @@ Medic Care is a healthcare appointment web app for patients to discover services
 - View appointment history, and reschedule or cancel appointments
 - Receive in-app notifications with sound when an appointment is approved or denied
 - Get a 30-minute reminder popup and alert sound for confirmed appointments while using the patient dashboard
-- Receive one appointment reminder email 30 minutes before a confirmed appointment when the Render reminder Cron Job is configured
+- Receive one appointment reminder email about one hour before a confirmed appointment
 - Review and manage appointment requests in the admin portal, including denial reasons
 - Manage user accounts and appointment records as an administrator
 - Keep profile details, contact information, and a profile photo (JPG, PNG, or WebP; up to 2 MB) in the database
@@ -175,16 +175,8 @@ MedicCare/
 
 The instructions above are for local development only. For deployment, configure the production environment variables, database connection, email service, and secure cookie settings on your hosting provider. Never use your local `.env` file or development credentials in production.
 
-### Appointment Reminders on Render
+### Appointment Reminders
 
 The patient dashboard checks confirmed appointments and shows a popup with `frontend/assets/alert.mp3` during the 30 minutes before the appointment. The sound plays after the user interacts with the page, as required by browser autoplay policies. Appointment dates and times are interpreted as Philippine time (UTC+8).
 
-To send one reminder email to the patient's account email address even when they are not using the site, create a **Cron Job** in Render:
-
-- Use the same repository and branch as the web service.
-- Build command: `pip install -r requirements.txt`
-- Start command: `python -m backend.reminders`
-- Schedule: `* * * * *` (once per minute)
-- Add the production database and email environment variables to the Cron Job, including `DB_HOST`, `DB_PORT`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `BREVO_API_KEY`, and `BREVO_SENDER_EMAIL` (or the SMTP variables).
-
-The reminder email is sent only for confirmed appointments. The scheduled job also creates an in-app notification and avoids sending the same appointment reminder more than once. Brevo must have a valid API key and verified sender configured on the Cron Job; SMTP can be used instead.
+When the app receives a patient notification request, it checks for confirmed appointments starting within the next hour and sends each patient one reminder email. This request-driven check does not require a separate Cron Job, but it only runs while the web app is receiving requests; it cannot send reminders while the service is asleep or has no traffic. For reminders that run independently of site traffic, configure a Render Cron Job to run `python -m backend.reminders` once per minute and provide it the same database and Brevo (or SMTP) environment variables as the web service.
